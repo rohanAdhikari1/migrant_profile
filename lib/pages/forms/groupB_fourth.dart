@@ -48,7 +48,7 @@ class _GroupbFourthState extends State<GroupbFourth> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                          "तपाईले संचालन गरिरहेको व्यावसायले कति जनालाई रोजगारी दिएको छ?",
+                                          "वैर्ेनशक रोजगारबाट फकेपनछ कन पाररवाररक समस्या िोग्निएको छ?",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                     ),
@@ -60,28 +60,45 @@ class _GroupbFourthState extends State<GroupbFourth> {
                                 ),
                               ],
                             ),
-                            TextFormField(
-                              keyboardType: TextInputType.numberWithOptions(),
-                              controller: controller
-                                  .employeeOnBusinessController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.blue[50],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
+                            SizedBox(height: 4),
+                            Obx(() {
+                              return DropdownButtonFormField<String>(
+                                isExpanded: true,
+                                value: controller.familyProblemAfterReturn.value
+                                    .isNotEmpty ? controller.familyProblemAfterReturn
+                                    .value : null,
+                                hint: Text("समस्या िोग्निएको छ?"),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: '1',
+                                    child: Text('छ '),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: '0',
+                                    child: Text('छैन'),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  controller.familyProblemAfterReturn.value = value!;
+                                },
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.blue[50],
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 8),
                                 ),
-                                hintText: 'संख्या',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 12),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'व्यक्तिको नाम ${'required'.tr}';
-                                }
-                                return null;
-                              },
-                            )
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'required'.tr;
+                                  }
+                                  return null;
+                                },
+                              );
+                            }),
                           ],
                         ),
                         Column(
@@ -91,7 +108,7 @@ class _GroupbFourthState extends State<GroupbFourth> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "तपाईले संचालन गरिरहेको व्यावसाय प्रबर्धनको लागि कुनै निकाय तथा स्थानीय सरकारको तर्फबाट कुनै सहयोग प्राप्त गर्नु भएको छ ?",
+                                    "यनर् छिने ",
                                     style:
                                     TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -105,11 +122,11 @@ class _GroupbFourthState extends State<GroupbFourth> {
                             SizedBox(height: 4),
                             Obx(() {
                               return DropdownButtonFormField<String>(
-                                value: controller.businessHelpFromGovernment
+                                value: controller.familyProblemAfterReturnType
                                     .value.isNotEmpty ? controller
-                                    .businessHelpFromGovernment.value : null,
+                                    .familyProblemAfterReturnType.value : null,
                                 isExpanded: true,
-                                hint: Text("तपाईले संचालन ... भएको छ?"),
+                                hint: Text("यनर् छिने"),
                                 items: [
                                   DropdownMenuItem(
                                     value: 'नगद सहयोग',
@@ -167,7 +184,7 @@ class _GroupbFourthState extends State<GroupbFourth> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "व्यावसाय शुरु गर्न वा प्रबर्धनको लागि कुनै निकाय, स्थानीय सरकारको तर्फबाट कस्ता किसिमको सहयोगको अपेक्षा गर्नु भएको छ ?",
+                                    "वैर्ेनशक रोजगारबाट फकेपनछ स्वास्थय समस्या आएको  छ? ",
                                     style:
                                     TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -243,7 +260,7 @@ class _GroupbFourthState extends State<GroupbFourth> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "व्यावसाय शुरु गर्न वा प्रबर्धनको लागि कस्ता खालका अप्ठ्याराहरुछन् ?",
+                                    "वैर्ेनशक रोजगारबाट फकेपनछ पररवार वा समर्ायमा कन िर्िाव वा लान्छना िोग्न परको?",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -256,185 +273,6 @@ class _GroupbFourthState extends State<GroupbFourth> {
                                 ),
                               ],
                             ),
-                            Obx(() {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('बजार ब्याबस्थापन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'बजार ब्याबस्थापन');
-                                              },
-                                            ),
-                                            Text('बजार ब्याबस्थापन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('सिचाई'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'सिचाई');
-                                              },
-                                            ),
-                                            Text('सिचाई'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains(
-                                                  'प्रबिधिक सहयोगको कमी'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'प्रबिधिक सहयोगको कमी');
-                                              },
-                                            ),
-                                            Text('प्रबिधिक सहयोगको कमी'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('तालिम'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'तालिम');
-                                              },
-                                            ),
-                                            Text('तालिम'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains(
-                                                  'यातायात तथा ढुवानी'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'यातायात तथा ढुवानी');
-                                              },
-                                            ),
-                                            Text('यातायात तथा ढुवानी'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('अनुदान'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'अनुदान');
-                                              },
-                                            ),
-                                            Text('अनुदान'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains(
-                                                  'कच्चा सामग्रीको कमी'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'कच्चा सामग्रीको कमी');
-                                              },
-                                            ),
-                                            Text('कच्चा सामग्रीको कमी'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('नीति नियम'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'नीति नियम');
-                                              },
-                                            ),
-                                            Text('नीति नियम'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedDifficultiesInBusiness
-                                                  .contains('बजेटको अभाव'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    'बजेटको अभाव');
-                                              },
-                                            ),
-                                            Text('बजेटको अभाव'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            }),
                           ],
                         ),
                       ],

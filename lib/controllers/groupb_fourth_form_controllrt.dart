@@ -9,8 +9,9 @@ class GroupbFourthFormController extends GetxController {
   late TextEditingController employeeOnBusinessController;
   RxBool isLoading = false.obs;
 
-  RxString businessHelpFromGovernment = ''.obs;
-  RxString expectedHelpFromGovernment = ''.obs;
+  RxString familyProblemAfterReturn = ''.obs;
+  RxString familyProblemAfterReturnType = ''.obs;
+  RxString familyProblemAfterReturnTypeOther = ''.obs;
 
   var selectedDifficultiesInBusiness = <String>[].obs;
 
