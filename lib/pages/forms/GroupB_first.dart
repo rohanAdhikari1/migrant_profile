@@ -1,5 +1,4 @@
-import 'package:survey/controllers/groupb_first_form_controllrt.dart';
-import 'package:survey/pages/forms/GroupB_second.dart';
+import 'package:migrant_profile/controllers/groupb_first_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -185,12 +184,45 @@ class _GroupbFirstState extends State<GroupbFirst> {
                                   if (value == null || value.isEmpty) {
                                     return 'required'.tr;
                                   }
+                                  if (value.length >3 ) {
+                                    return 'Invalid Format'.tr;
+                                  }
                                   return null;
                                 },
                               ),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 10.0,
+                      children: [
+                        Text("${'phone'.tr} :",style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextFormField(
+                          controller: controller.phoneController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.blue[50],
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: 'phone'.tr,
+                            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return  '${'phone'.tr} ${'required'.tr}';
+                            }
+                            if (value.length != 10) {
+                              return  '${'phone'.tr} ${'invalid'.tr}';
+                            }
+                            return null;
+                          },
+                        )
                       ],
                     ),
                     Row(
@@ -204,7 +236,7 @@ class _GroupbFirstState extends State<GroupbFirst> {
                               Row(
                                 children: [
                                   Text(
-                                    "जातजाति",
+                                    "घरमुलीसँगको नाता",
                                     style:
                                     TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -217,18 +249,82 @@ class _GroupbFirstState extends State<GroupbFirst> {
                               SizedBox(height: 4),
                               Obx(() {
                                 return DropdownButtonFormField<String>(
-                                  value: controller.selectedCaste.value
-                                      .isNotEmpty ? controller.selectedCaste
+                                  hint: Text("घरमुलीसँगको नाता"),
+                                  value: controller.selectedRelation.value
+                                      .isNotEmpty ? controller.selectedRelation
                                       .value : null,
-                                  hint: Text("जातजाति"),
                                   items: [
                                     DropdownMenuItem(
-                                      value: 'पहाडी',
-                                      child: Text('पहाडी'),
+                                      value: 'बाबु',
+                                      child: Text('बाबु'),
                                     ),
                                     DropdownMenuItem(
-                                      value: 'मधेशी',
-                                      child: Text('मधेशी'),
+                                      value: 'आमा',
+                                      child: Text('आमा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'हजुरबा',
+                                      child: Text('हजुरबा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'हजुरआमा',
+                                      child: Text('हजुरआमा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'छोरा',
+                                      child: Text('छोरा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'छोरी',
+                                      child: Text('छोरी'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'बुहारी',
+                                      child: Text('बुहारी'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'श्रीमान',
+                                      child: Text('श्रीमान'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'श्रीमति',
+                                      child: Text('श्रीमति'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'दाजु',
+                                      child: Text('दाजु'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'भाउजु',
+                                      child: Text('भाउजु'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'भाइ',
+                                      child: Text('भाइ'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'दिदी',
+                                      child: Text('दिदी'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'बहिनी',
+                                      child: Text('बहिनी'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'सासु',
+                                      child: Text('सासु'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'ससुरा',
+                                      child: Text('ससुरा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'नाती',
+                                      child: Text('नाती'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'नातीनी',
+                                      child: Text('नातीनी'),
                                     ),
                                     DropdownMenuItem(
                                       value: 'अन्य',
@@ -236,7 +332,7 @@ class _GroupbFirstState extends State<GroupbFirst> {
                                     ),
                                   ],
                                   onChanged: (value) {
-                                    controller.selectedCaste.value = value!;
+                                    controller.selectedRelation.value = value!;
                                   },
                                   decoration: InputDecoration(
                                     filled: true,
@@ -335,6 +431,205 @@ class _GroupbFirstState extends State<GroupbFirst> {
                         ),
                       ],
                     ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "शैक्षिकबिवरण",
+                                    style:
+                                    TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "*",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 4),
+                              Obx(() {
+                                return DropdownButtonFormField<String>(
+                                  hint: Text("शैक्षिकबिवरण"),
+                                  value: controller.selectedEducation.value
+                                      .isNotEmpty ? controller.selectedEducation
+                                      .value : null,
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'निराक्षर',
+                                      child: Text('निराक्षर'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'साक्षर',
+                                      child: Text('साक्षर'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'वाल कक्षा (कक्षा १ भन्दा मुनि)',
+                                      child: Text('वाल कक्षा'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'प्रावि',
+                                      child: Text('प्रावि'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'निमावि',
+                                      child: Text('निमावि'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'मावि',
+                                      child: Text('मावि'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'एस. इ. इ.',
+                                      child: Text('एस. इ. इ.'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'उमावि',
+                                      child: Text('उमावि'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'स्नातक',
+                                      child: Text('स्नातक'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'स्नातकोत्तर',
+                                      child: Text('स्नातकोत्तर'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'विद्यावारिधि',
+                                      child: Text('विद्यावारिधि'),
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    controller.selectedEducation.value = value!;
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.blue[50],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 8),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'required'.tr;
+                                    }
+                                    return null;
+                                  },
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "फर्केर आएको देश",
+                                    style:
+                                    TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "*",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ],
+                              ),
+                              // SizedBox(height: 2),
+                              SizedBox(height: 4),
+                              Obx(() {
+                                return DropdownButtonFormField<String>(
+                                  value: controller.selectedCountry.value
+                                      .isNotEmpty
+                                      ? controller.selectedCountry.value
+                                      : null,
+                                  hint: Text("फर्केर आएको देश"),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'साउदी अरेबिया',
+                                      child: Text('साउदी अरेबिया'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'कतार',
+                                      child: Text('कतार'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'यु.ए.ई./दुवई',
+                                      child: Text('यु.ए.ई./दुवई'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'कुवेत',
+                                      child: Text('कुवेत'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'बहराईन',
+                                      child: Text('बहराईन'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'ओमन',
+                                      child: Text('ओमन'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'जोर्डन',
+                                      child: Text('जोर्डन'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'जापान',
+                                      child: Text('जापान'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'भारत',
+                                      child: Text('भारत'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'कोरिया',
+                                      child: Text('कोरिया'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'अमेरिका',
+                                      child: Text('अमेरिका'),
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    controller.selectedCountry.value = value!;
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.blue[50],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 8),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'required'.tr;
+                                    }
+                                    return null;
+                                  },
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 10.0,
@@ -383,7 +678,7 @@ class _GroupbFirstState extends State<GroupbFirst> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
-                          controller: controller.returnFemaleCount,
+                          controller: controller.returnFeMaleCount,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.blue[50],
@@ -403,44 +698,6 @@ class _GroupbFirstState extends State<GroupbFirst> {
                             return null;
                           },
                         ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "कुन देशबाट फर्किएको हो ?",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "*",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 3),
-                        TextFormField(
-                          controller: controller.countryController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.blue[50],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintText: 'देशको नाम',
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 13, horizontal: 12),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'required'.tr;
-                            }
-                            return null;
-                          },
-                        )
                       ],
                     ),
                     Row(
@@ -571,7 +828,7 @@ class _GroupbFirstState extends State<GroupbFirst> {
                               Row(
                                 children: [
                                   Text(
-                                    "के कारण ले फर्किनु भयो ?",
+                                    "के कारणले वैदेशिक रोजगारबाट फर्केर आउनु भयो?",
                                     style:
                                     TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -592,27 +849,28 @@ class _GroupbFirstState extends State<GroupbFirst> {
                                   hint: Text("के कारण ले फर्किनु भयो ?"),
                                   items: [
                                     DropdownMenuItem(
-                                      value: 'सम्झौता सकिएर ',
-                                      child: Text('सम्झौता सकिएर '),
+                                      value: 'सम्झौता अवधि सकिएर',
+                                      child: Text('सम्झौता अवधि सकिएर'),
                                     ),
                                     DropdownMenuItem(
-                                      value: 'कोरोनाले गर्दा कम्पनी ले करार अवधी नसकी नै पठाएर ',
-                                      child: Text(
-                                          'कोरोनाले गर्दा कम्पनी ले करार अवधी नसकी नै पठाएर '),
+                                      value: 'कम्पनी बन्द भएर',
+                                      child: Text('कम्पनी बन्द भएर'),
                                     ),
                                     DropdownMenuItem(
-                                      value: 'कोरोनाले गर्दा राजिनामा दिएर सुरक्षित हुन र परिवारसँग रहन',
-                                      child: Text(
-                                          'कोरोनाले गर्दा राजिनामा दिएर सुरक्षित हुन र परिवारसँग रहन'),
+                                      value: 'मेडिकल फेल भएर',
+                                      child: Text('मेडिकल फेल भएर'),
                                     ),
                                     DropdownMenuItem(
-                                      value: 'कम्पनि टुटेर',
-                                      child: Text('कम्पनि टुटेर'),
+                                      value: 'कोरोना महामारीका कारण',
+                                      child: Text('कोरोना महामारीका कारण'),
                                     ),
                                     DropdownMenuItem(
-                                      value: 'कोरोना बाहेक अन्य स्वास्थ्य समस्या भएर',
-                                      child: Text(
-                                          'कोरोना बाहेक अन्य स्वास्थ्य समस्या भएर'),
+                                      value: 'आफ्नो स्वास्थ्य समस्याका कारण',
+                                      child: Text('आफ्नो स्वास्थ्य समस्याका कारण'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'घरायसी समस्याका कारण',
+                                      child: Text('घरायसी समस्याका कारण'),
                                     ),
                                     DropdownMenuItem(
                                       value: 'अन्य',

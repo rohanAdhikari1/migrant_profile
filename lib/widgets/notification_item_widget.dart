@@ -1,4 +1,4 @@
-import 'package:survey/models/notification.dart';
+import 'package:migrant_profile/models/notification.dart';
 import 'package:flutter/material.dart';
 
 class NotificationItemWidget extends StatelessWidget {

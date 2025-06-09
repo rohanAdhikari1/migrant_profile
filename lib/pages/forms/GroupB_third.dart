@@ -1,4 +1,4 @@
-import 'package:survey/controllers/groupb_third_form_controllrt.dart';
+import 'package:migrant_profile/controllers/groupb_third_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +45,7 @@ class _GroupbThirdState extends State<GroupbThird> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "विदेशको कमाई/पैसा के के मा लगानी गर्नु भयो ?",
+                                    "नयाँ व्यवसाय सञ्चालन गर्न वा नयाँ व्यवसाय सुरु गर्नका लागि कस्ता समस्याहरु छन् ?",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -65,13 +65,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'घर खर्च तथा खानपान'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'घर खर्च तथा खानपान');
                                               },
                                             ),
@@ -84,13 +84,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'बचत'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'बचत');
                                               },
                                             ),
@@ -107,13 +107,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'ऋण तिर्न'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'ऋण तिर्न');
                                               },
                                             ),
@@ -126,13 +126,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'जग्गा खरिदमा'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'जग्गा खरिदमा');
                                               },
                                             ),
@@ -149,13 +149,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'घर बनाउनमा'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'घर बनाउनमा');
                                               },
                                             ),
@@ -168,13 +168,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'शिक्षामा'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'शिक्षामा');
                                               },
                                             ),
@@ -191,13 +191,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'ऋण लगानी'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'ऋण लगानी');
                                               },
                                             ),
@@ -210,13 +210,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'व्यवसाय सुरुवात'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'व्यवसाय सुरुवात');
                                               },
                                             ),
@@ -233,13 +233,13 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedRemittanceSpendSource
+                                                  .selectedBusinessProblem
                                                   .contains(
                                                   'स्वास्थ्य तथा औषधि उपचार खर्च'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedRemittanceSpendSource,
+                                                        .selectedBusinessProblem,
                                                     'स्वास्थ्य तथा औषधि उपचार खर्च');
                                               },
                                             ),
@@ -257,51 +257,14 @@ class _GroupbThirdState extends State<GroupbThird> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 10.0,
-                          children: [
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text("विदेशबाट कति पैसा बचाउनु भएको छ ? ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            TextFormField(
-                              controller: controller
-                                  .savedForeignIncomeController,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.blue[50],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintText: 'रकम',
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 12),
-                              ),
-                              // validator: (value) {
-                              //   if (value == null || value.isEmpty) {
-                              //     return 'व्यक्तिको नाम ${'required'.tr}';
-                              //   }
-                              //   return null;
-                              // },
-                            )
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  "कुनै व्यावसाय शुरु गर्ने योजना बनाउनु भएको छ ?",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    "नेपालमा नै रहेर कुन क्षेत्रको काम गर्न चाहनु हुन्छ वा के गरी रहनु भएको छ?",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                                 Text(
                                   "*",
@@ -315,21 +278,33 @@ class _GroupbThirdState extends State<GroupbThird> {
                                 isExpanded: true,
                                 hint: Text(
                                     "कुनै व्यावसाय ... भएको छ?"),
-                                value: controller.wantToStartBusiness.value
-                                    .isNotEmpty ? controller.wantToStartBusiness
+                                value: controller.desiredWorkArea.value
+                                    .isNotEmpty ? controller.desiredWorkArea
                                     .value : null,
                                 items: [
                                   DropdownMenuItem(
-                                    value: '1',
-                                    child: Text('छ '),
+                                    value: 'जागिर खाने',
+                                    child: Text('जागिर खाने'),
                                   ),
                                   DropdownMenuItem(
-                                    value: '0',
-                                    child: Text('छैन'),
+                                    value: 'कृषि व्यवसाय गर्ने',
+                                    child: Text('कृषि व्यवसाय गर्ने'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'व्यापार व्यवसाय सञ्चालन गर्ने',
+                                    child: Text('व्यापार व्यवसाय सञ्चालन गर्ने'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'व्यवसायिक कार्य गर्ने (इलेक्ट्रिसियन, प्लम्बर, मिस्त्री …)',
+                                    child: Text('व्यवसायिक कार्य गर्ने (इलेक्ट्रिसियन, प्लम्बर, मिस्त्री …)'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'अन्य',
+                                    child: Text('अन्य'),
                                   ),
                                 ],
                                 onChanged: (value) {
-                                  controller.wantToStartBusiness.value = value!;
+                                  controller.desiredWorkArea.value = value!;
                                 },
                                 decoration: InputDecoration(
                                   filled: true,
@@ -358,7 +333,7 @@ class _GroupbThirdState extends State<GroupbThird> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "छ भने के व्यावसाय शुरु गर्ने योजना छ ?",
+                                    "नेपालमा नै रोजगार वा स्वरोजगार हुन के के कुराहरु आवश्यक छ?",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -378,17 +353,17 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedBusinessPlan
+                                                  .needForEmpOnNepal
                                                   .contains(
-                                                  'कुखुरा पालन'),
+                                                  'सिपमुलक तालिम'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedBusinessPlan,
-                                                    'कुखुरा पालन');
+                                                        .needForEmpOnNepal,
+                                                    'सिपमुलक तालिम');
                                               },
                                             ),
-                                            Text('कुखुरा पालन'),
+                                            Text('सिपमुलक तालिम'),
                                           ],
                                         ),
                                       ),
@@ -397,59 +372,17 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedBusinessPlan
+                                                  .needForEmpOnNepal
                                                   .contains(
-                                                  'वंगुरपालन'),
+                                                  'अनुदान सहयोग'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedBusinessPlan,
-                                                    'वंगुरपालन');
+                                                        .needForEmpOnNepal,
+                                                    'अनुदान सहयोग');
                                               },
                                             ),
-                                            Text('वंगुरपालन'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'वाख्रा पालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'वाख्रा पालन');
-                                              },
-                                            ),
-                                            Text('वाख्रा पालन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'तरकारी खेती'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'तरकारी खेती');
-                                              },
-                                            ),
-                                            Text('तरकारी खेती'),
+                                            Text('अनुदान सहयोग'),
                                           ],
                                         ),
                                       ),
@@ -462,36 +395,17 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedBusinessPlan
+                                                  .needForEmpOnNepal
                                                   .contains(
-                                                  'फलफुल खेती'),
+                                                  'सहुलियत ऋण'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedBusinessPlan,
-                                                    'फलफुल खेती');
+                                                        .needForEmpOnNepal,
+                                                    'सहुलियत ऋण');
                                               },
                                             ),
-                                            Text('फलफुल खेती'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'व्यापार'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'व्यापार');
-                                              },
-                                            ),
-                                            Text('व्यापार'),
+                                            Text('सहुलियत ऋण'),
                                           ],
                                         ),
                                       ),
@@ -504,36 +418,17 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedBusinessPlan
+                                                  .needForEmpOnNepal
                                                   .contains(
-                                                  'गाईपालन'),
+                                                  'सामग्री तथा प्रविधि सहयोग'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedBusinessPlan,
-                                                    'गाईपालन');
+                                                        .needForEmpOnNepal,
+                                                    'सामग्री तथा प्रविधि सहयोग');
                                               },
                                             ),
-                                            Text('गाईपालन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'डेरी सचालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'डेरी सचालन');
-                                              },
-                                            ),
-                                            Text('डेरी सचालन'),
+                                            Text('सामग्री तथा प्रविधि सहयोग'),
                                           ],
                                         ),
                                       ),
@@ -546,351 +441,17 @@ class _GroupbThirdState extends State<GroupbThird> {
                                           children: [
                                             Checkbox(
                                               value: controller
-                                                  .selectedBusinessPlan
+                                                  .needForEmpOnNepal
                                                   .contains(
-                                                  'सरकारी जागीर'),
+                                                  'उत्पादित बस्तुको बजारीकरणका लागि सहयोग'),
                                               onChanged: (_) {
                                                 controller.toggleSelection(
                                                     controller
-                                                        .selectedBusinessPlan,
-                                                    'सरकारी जागीर');
+                                                        .needForEmpOnNepal,
+                                                    'उत्पादित बस्तुको बजारीकरणका लागि सहयोग');
                                               },
                                             ),
-                                            Text('सरकारी जागीर'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'यहि रोजगार गर्ने'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'यहि रोजगार गर्ने');
-                                              },
-                                            ),
-                                            Text('यहि रोजगार गर्ने'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedBusinessPlan
-                                                  .contains(
-                                                  'अन्य'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedBusinessPlan,
-                                                    'अन्य');
-                                              },
-                                            ),
-                                            Text('अन्य'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            }),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "कुनै व्यावसाय गरिरहनु भएको छ ?",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "*",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 4),
-                            Obx(() {
-                              return DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                value: controller.haveCurrentBusiness.value
-                                    .isNotEmpty ? controller.haveCurrentBusiness
-                                    .value : null,
-                                hint: Text(
-                                    "कुनै व्यावसाय गरिरहनु भएको छ ?"),
-                                items: [
-                                  DropdownMenuItem(
-                                    value: '1',
-                                    child: Text('छ '),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: '0',
-                                    child: Text('छैन'),
-                                  ),
-                                ],
-                                onChanged: (value) {
-                                  controller.haveCurrentBusiness.value = value!;
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.blue[50],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 8),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'required'.tr;
-                                  }
-                                  return null;
-                                },
-                              );
-                            }),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "छ भने के व्यावसाय गरिरहनु भएको छ ?",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Obx(() {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'कुखुरा पालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'कुखुरा पालन');
-                                              },
-                                            ),
-                                            Text('कुखुरा पालन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'वंगुरपालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'वंगुरपालन');
-                                              },
-                                            ),
-                                            Text('वंगुरपालन'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'वाख्रा पालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'वाख्रा पालन');
-                                              },
-                                            ),
-                                            Text('वाख्रा पालन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'तरकारी खेती'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'तरकारी खेती');
-                                              },
-                                            ),
-                                            Text('तरकारी खेती'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'फलफुल खेती'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'फलफुल खेती');
-                                              },
-                                            ),
-                                            Text('फलफुल खेती'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'व्यापार'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'व्यापार');
-                                              },
-                                            ),
-                                            Text('व्यापार'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'गाईपालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'गाईपालन');
-                                              },
-                                            ),
-                                            Text('गाईपालन'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'डेरी सचालन'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'डेरी सचालन');
-                                              },
-                                            ),
-                                            Text('डेरी सचालन'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'सरकारी जागीर'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'सरकारी जागीर');
-                                              },
-                                            ),
-                                            Text('सरकारी जागीर'),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              value: controller
-                                                  .selectedCurrentBusiness
-                                                  .contains(
-                                                  'अन्य'),
-                                              onChanged: (_) {
-                                                controller.toggleSelection(
-                                                    controller
-                                                        .selectedCurrentBusiness,
-                                                    'अन्य');
-                                              },
-                                            ),
-                                            Text('अन्य'),
+                                            Text('उत्पादित बस्तुको बजारीकरणका लागि सहयोग'),
                                           ],
                                         ),
                                       ),

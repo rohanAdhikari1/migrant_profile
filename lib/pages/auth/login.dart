@@ -1,6 +1,6 @@
-import 'package:survey/Pages/home_page.dart';
-import 'package:survey/data/enums.dart';
-import 'package:survey/services/auth_service.dart';
+import 'package:migrant_profile/Pages/home_page.dart';
+import 'package:migrant_profile/data/enums.dart';
+import 'package:migrant_profile/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -64,7 +64,15 @@ class _LoginState extends State<Login> {
                     children: [
                       Align(
                         alignment: Alignment.center,
-                        child: Text("ग्रामथान गाउँपालिका", style: TextStyle(
+                        child: Text("Digital Labor Migration", style: TextStyle(
+                            color: Colors.blue[800],
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold
+                        ),textAlign: TextAlign.center,),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text("Profile System", style: TextStyle(
                             color: Colors.blue[800],
                             fontSize: 26,
                             fontWeight: FontWeight.bold

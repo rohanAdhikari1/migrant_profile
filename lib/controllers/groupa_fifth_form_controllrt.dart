@@ -1,20 +1,21 @@
-import 'package:survey/pages/forms/GroupA_sixth.dart';
-import 'package:survey/repositories/local/record_repository.dart';
+import 'package:migrant_profile/pages/forms/GroupA_sixth.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class GroupaFifthFormController  extends GetxController {
+class GroupaFifthFormController extends GetxController {
   final RecordRepository recordRepository = RecordRepository();
   final formField = GlobalKey<FormState>();
-  var foreignMonthlyIncome = TextEditingController();
-  var previousRemittanceAmountController = TextEditingController();
-  var previousRemittanceTimesController = TextEditingController();
-  var childrenOutForStudyLocationController = TextEditingController();
+  var remittanceAmountController = TextEditingController();
+
   RxBool isLoading = false.obs;
   RxString secondMarriageGender = ''.obs;
   RxString isElderAloneOnHome = ''.obs;
   RxString isChildrenOutForStudy = ''.obs;
-  RxString salaryChangedDueToCovid = ''.obs;
+  RxString isAmountSend= ''.obs;
+  RxString remittanceCount= ''.obs;
+  RxString amountNotSendReason= ''.obs;
+  RxString childrenOutForStudy = ''.obs;
 
   var selectedRemittanceCollectMethod = <String>[].obs;
 
@@ -25,20 +26,22 @@ class GroupaFifthFormController  extends GetxController {
   }
 
   void loadIfAvailable() async {
-    Map<String, dynamic> records = await recordRepository.retrieveRecordGroupAPart5(Get.arguments);
-    secondMarriageGender.value = records['remarried_gender']??'';
-    isElderAloneOnHome.value = (records['is_elder_only_home']?.toString())??'';
-    isChildrenOutForStudy.value = (records['is_children_out_for_study']?.toString())??'';
-    childrenOutForStudyLocationController.text = records['children_study_location']??'';
-    foreignMonthlyIncome.text = records['total_foreign_income'];
-    salaryChangedDueToCovid.value = records['salary_change']??'';
-    initializeFromCommaSeparatedValues(records['remittance_method']??'');
-    previousRemittanceTimesController.text = records['previous_year_remittance_count']?.toString()??'';
-    previousRemittanceAmountController.text = records['previous_year_remittance_amount']??'';
+    Map<String, dynamic> records = await recordRepository
+        .retrieveRecordGroupAPart5(Get.arguments);
+    secondMarriageGender.value = records['remarried_gender'] ?? '';
+    isElderAloneOnHome.value =
+        (records['is_elder_only_home']?.toString()) ?? '';
+    isChildrenOutForStudy.value =
+        (records['is_children_out_for_study']?.toString()) ?? '';
+    childrenOutForStudy.value = records['children_out_for_study']??'';
+    isAmountSend.value = records['have_send_money']?.toString()??'';
+    amountNotSendReason.value = records['money_not_send_problem']??'';
+    remittanceCount.value = records['remittance_count']??'';
+    remittanceAmountController.text =  records['remittance_amount']??'';
   }
 
   @override
-  void onClose(){
+  void onClose() {
     super.onClose();
     formField.currentState?.reset();
   }
@@ -48,7 +51,8 @@ class GroupaFifthFormController  extends GetxController {
   }
 
   void initializeFromCommaSeparatedValues(String values) {
-    selectedRemittanceCollectMethod.value = values.isNotEmpty ? values.split(',') : [];
+    selectedRemittanceCollectMethod.value =
+        values.isNotEmpty ? values.split(',') : [];
   }
 
   void toggleSelection(String item) {
@@ -59,23 +63,30 @@ class GroupaFifthFormController  extends GetxController {
     }
   }
 
-  void submit() async{
-    if(formField.currentState!.validate()) {
+  void submit() async {
+    if (formField.currentState!.validate()) {
       isLoading.value = true;
       bool c;
       try {
-        c=false;
+        c = false;
         var recordId = Get.arguments;
-        var previousRemittanceCount= int.parse(previousRemittanceTimesController.text);
-        var previousRemittanceAmount = previousRemittanceAmountController.text;
-        await recordRepository.updateRecordGroupAPart5(recordId, secondMarriageGender.value.isNotEmpty?1:0, secondMarriageGender.value, int.parse(isElderAloneOnHome.value), int.parse(isChildrenOutForStudy.value), childrenOutForStudyLocationController.text, foreignMonthlyIncome.text,salaryChangedDueToCovid.value,getCommaSeparatedValues(),previousRemittanceCount,previousRemittanceAmount);
-        Get.off(GroupaSixth(),arguments: recordId);
-        c=true;
+        var remittanceAmount = remittanceAmountController.text;
+        await recordRepository.updateRecordGroupAPart5(recordId,
+            secondMarriageGender.value,
+            int.parse(isElderAloneOnHome.value),
+            int.parse(isChildrenOutForStudy.value),
+            childrenOutForStudy.value,
+            int.parse(isAmountSend.value),
+            amountNotSendReason.value,
+            remittanceCount.value,
+            remittanceAmount);
+        Get.off(GroupaSixth(), arguments: recordId);
+        c = true;
       } catch (e) {
         print(e);
         c = false;
       }
-      if(!c){
+      if (!c) {
         Get.snackbar(
           "Error",
           "Something Went Wrong! Please try again later.",

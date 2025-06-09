@@ -1,9 +1,9 @@
-import 'package:survey/pages/forms/GroupA_fifth.dart';
-import 'package:survey/repositories/local/record_repository.dart';
+import 'package:migrant_profile/pages/forms/GroupA_fifth.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class GroupaFourthFormController  extends GetxController {
+class GroupaFourthFormController extends GetxController {
   final RecordRepository recordRepository = RecordRepository();
   final formField = GlobalKey<FormState>();
   RxBool isLoading = false.obs;
@@ -18,14 +18,15 @@ class GroupaFourthFormController  extends GetxController {
   }
 
   void loadIfAvailable() async {
-    Map<String, dynamic> records = await recordRepository.retrieveRecordGroupAPart4(Get.arguments);
-    covidHealthProblem.value = records['covid_health_issue_type']??'';
-    foreignEmploymentFamilyIssue.value = records['home_problem_type']??'';
-    initializeFromCommaSeparatedValues(records['covid_problem_type']??'');
+    Map<String, dynamic> records = await recordRepository
+        .retrieveRecordGroupAPart4(Get.arguments);
+    covidHealthProblem.value = records['covid_health_issue_type'] ?? '';
+    foreignEmploymentFamilyIssue.value = records['home_problem_type'] ?? '';
+    initializeFromCommaSeparatedValues(records['covid_problem_type'] ?? '');
   }
 
   @override
-  void onClose(){
+  void onClose() {
     super.onClose();
     formField.currentState?.reset();
   }
@@ -46,21 +47,26 @@ class GroupaFourthFormController  extends GetxController {
     }
   }
 
-  void submit() async{
-    if(formField.currentState!.validate()) {
+  void submit() async {
+    if (formField.currentState!.validate()) {
       isLoading.value = true;
       bool c;
       try {
-        c=false;
+        c = false;
         var recordId = Get.arguments;
-        await recordRepository.updateRecordGroupAPart4(recordId, covidHealthProblem.value, foreignEmploymentFamilyIssue.value,getCommaSeparatedValues());
-        Get.off(GroupaFifth(),arguments: recordId);
-        c=true;
+        await recordRepository.updateRecordGroupAPart4(
+          recordId,
+          covidHealthProblem.value,
+          foreignEmploymentFamilyIssue.value,
+          getCommaSeparatedValues(),
+        );
+        Get.off(GroupaFifth(), arguments: recordId);
+        c = true;
       } catch (e) {
         print(e);
         c = false;
       }
-      if(!c){
+      if (!c) {
         Get.snackbar(
           "Error",
           "Something Went Wrong! Please try again later.",

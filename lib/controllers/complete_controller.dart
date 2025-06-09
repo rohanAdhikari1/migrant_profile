@@ -1,18 +1,18 @@
-import 'package:survey/models/data.dart';
-import 'package:survey/repositories/local/record_repository.dart';
+import 'package:migrant_profile/models/data.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CompleteController  extends GetxController {
+class CompleteController extends GetxController {
   RecordRepository recordRepository = RecordRepository();
   final RxList<DataModel> records = <DataModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    try{
+    try {
       fetchFarmersRecords();
-    }catch(e){
+    } catch (e) {
       Get.snackbar(
         "Error",
         "An error occurred: ${e.toString()}",

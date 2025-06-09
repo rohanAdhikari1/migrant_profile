@@ -1,11 +1,9 @@
-import 'package:survey/pages/forms/GroupB_third.dart';
-import 'package:survey/pages/forms/groupB_fourth.dart';
-import 'package:survey/pages/forms/location_form.dart';
-import 'package:survey/repositories/local/record_repository.dart';
+import 'package:migrant_profile/pages/forms/location_form.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class GroupbFourthFormController  extends GetxController {
+class GroupbFourthFormController extends GetxController {
   final RecordRepository recordRepository = RecordRepository();
   final formField = GlobalKey<FormState>();
   late TextEditingController employeeOnBusinessController;
@@ -14,8 +12,7 @@ class GroupbFourthFormController  extends GetxController {
   RxString businessHelpFromGovernment = ''.obs;
   RxString expectedHelpFromGovernment = ''.obs;
 
-  var selectedDifficultiesInBusiness= <String>[].obs;
-
+  var selectedDifficultiesInBusiness = <String>[].obs;
 
   @override
   void onInit() {
@@ -29,7 +26,8 @@ class GroupbFourthFormController  extends GetxController {
   }
 
   void initializeFromCommaSeparatedValues(String values) {
-    selectedDifficultiesInBusiness.value = values.isNotEmpty ? values.split(',') : [];
+    selectedDifficultiesInBusiness.value =
+        values.isNotEmpty ? values.split(',') : [];
   }
 
   void toggleSelection(String item) {
@@ -40,37 +38,49 @@ class GroupbFourthFormController  extends GetxController {
     }
   }
 
-  void loadIfAvailable() async{
-    Map<String, dynamic> records = await recordRepository.retrieveRecordGroupBPart4(Get.arguments);
-    employeeOnBusinessController.text = records['employees_on_current_business']?.toString()??'';
-    businessHelpFromGovernment.value = records['business_help_government']??'';
-    expectedHelpFromGovernment.value = records['want_help_type_from_business']??'';
-    initializeFromCommaSeparatedValues(records['difficulties_to_start_business']??'');
+  void loadIfAvailable() async {
+    Map<String, dynamic> records = await recordRepository
+        .retrieveRecordGroupBPart4(Get.arguments);
+    employeeOnBusinessController.text =
+        records['employees_on_current_business']?.toString() ?? '';
+    businessHelpFromGovernment.value =
+        records['business_help_government'] ?? '';
+    expectedHelpFromGovernment.value =
+        records['want_help_type_from_business'] ?? '';
+    initializeFromCommaSeparatedValues(
+      records['difficulties_to_start_business'] ?? '',
+    );
   }
 
   @override
-  void onClose(){
+  void onClose() {
     super.onClose();
     employeeOnBusinessController.dispose();
     formField.currentState?.reset();
   }
 
-  void submit() async{
-    if(formField.currentState!.validate()) {
+  void submit() async {
+    if (formField.currentState!.validate()) {
       isLoading.value = true;
       bool c;
       try {
-        c=false;
+        c = false;
         var recordId = Get.arguments;
         var employeeOnBusiness = int.parse(employeeOnBusinessController.text);
-        await recordRepository.updateRecordGroupBPart4(recordId, employeeOnBusiness, businessHelpFromGovernment.value, expectedHelpFromGovernment.value,getCommaSeparatedValues());
-        Get.off(LocationForm(),arguments: recordId);
-        c=true;
+        await recordRepository.updateRecordGroupBPart4(
+          recordId,
+          employeeOnBusiness,
+          businessHelpFromGovernment.value,
+          expectedHelpFromGovernment.value,
+          getCommaSeparatedValues(),
+        );
+        Get.off(LocationForm(), arguments: recordId);
+        c = true;
       } catch (e) {
         print(e);
         c = false;
       }
-      if(!c){
+      if (!c) {
         Get.snackbar(
           "Error",
           "Something Went Wrong! Please try again later.",

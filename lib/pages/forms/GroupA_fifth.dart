@@ -1,5 +1,4 @@
-import 'package:survey/controllers/groupa_fifth_form_controllrt.dart';
-import 'package:survey/pages/forms/GroupA_sixth.dart';
+import 'package:migrant_profile/controllers/groupa_fifth_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,26 +10,11 @@ class GroupaFifth extends StatefulWidget {
 }
 
 class _GroupaFifthState extends State<GroupaFifth> {
-  bool _ismr1selected = false;
-  bool _ismr2selected = false;
-  bool _ismr3selected = false;
-  bool _ismr4selected = false;
-  bool _ismr5selected = false;
-  bool _ismr6selected = false;
 
   @override
   Widget build(BuildContext context) {
     final GroupaFifthFormController controller = Get.put(
         GroupaFifthFormController());
-
-    final _remittanceCollectMethod = [
-      'सहकारीबाट',
-      'आईएमइ सेन्टरबाट',
-      'बैंकबाट',
-      'फाइनान्स कम्पनिबाट',
-      'हुण्डीबाट',
-      'साथीभाई बाट',
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -64,10 +48,12 @@ class _GroupaFifthState extends State<GroupaFifth> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
-                                      'यदि दोस्रो विवाह गरेको भए महिला कि पुरुषले गरेको हो ?',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    Expanded(
+                                      child: Text(
+                                        'यदि वैदेशिक रोजगार कै कारण दोश्रो विवाह गरेको भए कसले गरेको छ ?',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -119,7 +105,7 @@ class _GroupaFifthState extends State<GroupaFifth> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "साठी वर्ष माथिका वुवा आमा मात्र घरमा एक्लै बसेका छन् ?",
+                                        "वैदेशिक रोजगार कै कारण ६० वर्ष माथिको वृद्ध वृद्धा मात्र घरमा बस्नु परेको छ ?",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
@@ -242,6 +228,78 @@ class _GroupaFifthState extends State<GroupaFifth> {
                                 }),
                               ],
                             ),
+                            Obx(() {
+                              return controller.isChildrenOutForStudy.value=='1'?
+                                Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "छोरा छोरि वोडिङ स्कूलमा पढउनुको लागि सदरमुकाम वा अन्य सहरमा पठाएका छन् भने छोरा कि छोरि पठाएका छन् ?",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          "*",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    DropdownButtonFormField<String>(
+                                      value: controller.childrenOutForStudy
+                                          .value.isNotEmpty ? controller
+                                          .childrenOutForStudy.value : null,
+                                      hint: Text(
+                                          "छोरा छोरि वोडिङ स्कूल ... छन्?"),
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: 'छोरा पढाउन',
+                                          child: Text('छोरा पढाउन'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'छोरी पढाउन',
+                                          child: Text('छोरी पढाउन'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'छोरा छोरी दुबै पढाउन',
+                                          child: Text('छोरा छोरी दुबै पढाउन'),
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        controller.childrenOutForStudy.value =
+                                        value!;
+                                      },
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.blue[50],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12, horizontal: 8),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'required'.tr;
+                                        }
+                                        return null;
+                                      },
+                                    )
+                                  ],
+                                ):SizedBox();
+                            }),
+
                             Column(
                               children: [
                                 Row(
@@ -249,7 +307,7 @@ class _GroupaFifthState extends State<GroupaFifth> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "छोरा छोरि वोडिङ स्कूलमा पढउनुको लागि सदरमुकाम वा अन्य सहरमा पठाएका छन् भने छोरा कि छोरि पठाएका छन् ?",
+                                        "गत १ वर्षमा पैसा घरमा पठाउनु भयो ?",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
@@ -266,147 +324,25 @@ class _GroupaFifthState extends State<GroupaFifth> {
                                     ),
                                   ],
                                 ),
-                                TextFormField(
-                                  controller: controller
-                                      .childrenOutForStudyLocationController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.blue[50],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'छोरा छोरि वोडिङ स्कूलमा ... छोरि पठाएका छन् ?',
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 12),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "विदेशको मासिक कमाइ कति हुन्छ ?(परिवारलाई थाहा नहुन त्यसैलेप्रस्न नम्बर ३५ र ३६ मा जोड दिनुहोला) ",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: controller.foreignMonthlyIncome,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.blue[50],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'मसिक तलब',
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 12),
-                                  ),
-                                  // validator: (value) {
-                                  //   if (value == null || value.isEmpty) {
-                                  //     return '${'farmer_ward_no'.tr} ${'required'.tr}';
-                                  //   }
-                                  //   return null;
-                                  // },
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                          "विदेशवाट पठाएको रकम कहाँबाट लिनेगर्नु भएको छ ?",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    Text("*",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ))
-                                  ],
-                                ),
-                                Obx(() {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: _remittanceCollectMethod.map((
-                                        option) {
-                                      return Row(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Checkbox(
-                                                  value: controller
-                                                      .selectedRemittanceCollectMethod
-                                                      .contains(
-                                                      option),
-                                                  onChanged: (_) =>
-                                                      controller
-                                                          .toggleSelection(
-                                                          option),
-                                                ),
-                                                Text(option),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  );
-                                }),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                          "कोरोनको कारणले खाइपाई आएको तलब सुविधामा केहि परिवर्तन आएको छ ? छ भनेकति फरक भएको छ ?",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ],
-                                ),
                                 Obx(() {
                                   return DropdownButtonFormField<String>(
-                                    hint: Text("कोरोनको कारणले ... भएको छ?"),
-                                    value: controller.salaryChangedDueToCovid.value.isNotEmpty?controller.salaryChangedDueToCovid.value:null,
+                                    value: controller.isAmountSend.value.isNotEmpty ? controller
+                                        .isAmountSend.value : null,
+                                    hint: Text(
+                                        "गत १ वर्षमा कति पैसा घरमा पठाउनु भयो ?"),
                                     items: [
                                       DropdownMenuItem(
-                                        value: 'कोरोना पछि तलब नै पठाएको छैन',
-                                        child:
-                                        Text('कोरोना पछि तलब नै पठाएको छैन'),
+                                        value: '1',
+                                        child: Text('छ'),
                                       ),
                                       DropdownMenuItem(
-                                        value: 'पठाएको छ तर ७५% मात्र',
-                                        child: Text('पठाएको छ तर ७५% मात्र'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'पठाएको छ तर ५०% मात्र',
-                                        child: Text('पठाएको छ तर ५०% मात्र'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'पठाएको छ तर २५% मात्र',
-                                        child: Text('पठाएको छ तर २५% मात्र'),
+                                        value: '0',
+                                        child: Text('छैन'),
                                       ),
                                     ],
                                     onChanged: (value) {
-                                      controller.salaryChangedDueToCovid.value = value!;
+                                      controller.isAmountSend.value =
+                                      value!;
                                     },
                                     decoration: InputDecoration(
                                       filled: true,
@@ -418,112 +354,226 @@ class _GroupaFifthState extends State<GroupaFifth> {
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 12, horizontal: 8),
                                     ),
-                                    // validator: (value) {
-                                    //   if (value == null || value.isEmpty) {
-                                    //     return 'required'.tr;
-                                    //   }
-                                    //   return null;
-                                    // },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
                                   );
                                 }),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "विदेश गएको व्यक्तिले पोहोर सालको कति पटक पैसा पठाउनु भयो ?",
+                            Obx(() {
+                              return controller.isAmountSend.value=='0'?
+                              Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "यदी छैन भने किन?",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "*",
                                         style: TextStyle(
+                                          color: Colors.red,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: controller
-                                      .previousRemittanceTimesController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.blue[50],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'कति पटक',
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 12),
+                                    ],
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'required'.tr;
-                                    }
-                                    return null;
-                                  },
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "विदेश गएको व्यक्तिले पोहोर सालको जम्मा कति पैसा पठाउनु भयो ? (यस प्रश्नमा आवश्यक समय लगाएर कापीमा टिपोट गरेर मात्र तलको फारममा भर्ने)",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                  DropdownButtonFormField<String>(
+                                    value: controller.amountNotSendReason
+                                        .value.isNotEmpty ? controller
+                                        .amountNotSendReason.value : null,
+                                    hint: Text(
+                                        "किन?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'गएको १ वर्ष नपुगेकोले',
+                                        child: Text('गएको १ वर्ष नपुगेकोले'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'विदेशमाकाम नपाएको वा कमाइ नभएकोले',
+                                        child: Text('विदेशमाकाम नपाएको वा कमाइ नभएकोले'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'विदेशमाअन्य कुनै समस्यामा भएकोले (अलपत्र, सम्पर्क बिहीन, जेल, विरामी…. )',
+                                        child: Text('विदेशमाअन्य कुनै समस्यामा भएकोले (अलपत्र, सम्पर्क बिहीन, जेल, विरामी…. )',softWrap: true),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'घरमापैसा आवश्यक नभएकोले',
+                                        child: Text('विदेशमाकाम नपाएको वा कमाइ नभएकोले'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'अन्य',
+                                        child: Text('अन्य	'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.amountNotSendReason.value =
+                                      value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  )
+                                ],
+                              ):SizedBox();
+                            }),
+
+                            Obx(() {
+                              return controller.isAmountSend.value=='1'?
+                              Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              "वगत १ वर्षमा कति पटक पठाउनु भयो ?",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            "*",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      DropdownButtonFormField<String>(
+                                        value: controller.remittanceCount
+                                            .value.isNotEmpty ? controller
+                                            .remittanceCount.value : null,
+                                        hint: Text(
+                                            "किन?"),
+                                        items: [
+                                          DropdownMenuItem(
+                                            value: '१ पटक',
+                                            child: Text('१ पटक'),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: '२ पटक',
+                                            child: Text('२ पटक'),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: '३ पटक',
+                                            child: Text('३ पटक'),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: '४ पटक',
+                                            child: Text('४ पटक'),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: '५ वा सो भन्दा बढि पटक',
+                                            child: Text('५ वा सो भन्दा बढि पटक'),
+                                          ),
+                                        ],
+                                        onChanged: (value) {
+                                          controller.remittanceCount.value =
+                                          value!;
+                                        },
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.blue[50],
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 12, horizontal: 8),
                                         ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: controller
-                                      .previousRemittanceAmountController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.blue[50],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'कति पटक',
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 12),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'required'.tr;
+                                          }
+                                          return null;
+                                        },
+                                      )
+                                    ],
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'required'.tr;
-                                    }
-                                    return null;
-                                  },
-                                )
-                              ],
-                            ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              "गत १ वर्षमा कति पैसा पठाउनु भयो ?",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            "*",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      TextFormField(
+                                        controller: controller
+                                            .remittanceAmountController,
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.blue[50],
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: 'कति?',
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 16, horizontal: 12),
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'required'.tr;
+                                          }
+                                          return null;
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ):SizedBox();
+                            }),
                           ],
                         ),
                       ],

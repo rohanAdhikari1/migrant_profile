@@ -38,7 +38,7 @@ class LocalString extends Translations{
     //   'registration_no':"Registration No"
     // },
     'ne_NP':{
-      'app_name':"पशु खोप जानकारी प्रणाली",
+      'app_name':"डिजिटल वस्तुस्थिति विवरण",
       'family_detail':"आधारभूत पारिवारिक जानकारी",
       'database_sync':"डाटाबेस सिंक",
       'gender': "लिङ्ग",

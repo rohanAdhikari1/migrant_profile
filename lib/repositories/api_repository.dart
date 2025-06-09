@@ -1,5 +1,5 @@
-import 'package:survey/repositories/local/record_repository.dart';
-import 'package:survey/services/api_service.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
+import 'package:migrant_profile/services/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

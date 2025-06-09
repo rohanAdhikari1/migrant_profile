@@ -1,5 +1,5 @@
-import 'package:survey/controllers/database_sync_controller.dart';
-import 'package:survey/widgets/sync_item_widget.dart';
+import 'package:migrant_profile/controllers/database_sync_controller.dart';
+import 'package:migrant_profile/widgets/sync_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,5 @@
-import 'package:survey/controllers/complete_controller.dart';
-import 'package:survey/widgets/data_item_widget.dart';
+import 'package:migrant_profile/controllers/complete_controller.dart';
+import 'package:migrant_profile/widgets/data_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

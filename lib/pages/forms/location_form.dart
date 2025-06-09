@@ -1,4 +1,4 @@
-import 'package:survey/controllers/location_form_controller.dart';
+import 'package:migrant_profile/controllers/location_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

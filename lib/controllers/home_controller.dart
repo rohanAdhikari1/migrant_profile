@@ -1,5 +1,5 @@
-import 'package:survey/repositories/local/record_repository.dart';
-import 'package:survey/services/user_service.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
+import 'package:migrant_profile/services/user_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -11,10 +11,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     _loadCounts();
-   populateData();
+    populateData();
   }
 
-  void populateData() async{
+  void populateData() async {
     UserService userService = UserService();
     Map<String, dynamic> userData = await userService.getUserData();
     name.value = userData['first_name'];
@@ -25,7 +25,7 @@ class HomeController extends GetxController {
     counts.assignAll(countData);
   }
 
-  Future<void> refreshCounts() async{
+  Future<void> refreshCounts() async {
     var countData = await recordRepository.getCounts();
     counts.assignAll(countData);
   }

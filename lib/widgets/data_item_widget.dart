@@ -1,7 +1,7 @@
-import 'package:survey/controllers/home_controller.dart';
-import 'package:survey/models/data.dart';
-import 'package:survey/pages/forms/GroupA_first.dart';
-import 'package:survey/pages/forms/GroupB_first.dart';
+import 'package:migrant_profile/controllers/home_controller.dart';
+import 'package:migrant_profile/models/data.dart';
+import 'package:migrant_profile/pages/forms/GroupA_first.dart';
+import 'package:migrant_profile/pages/forms/GroupB_first.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

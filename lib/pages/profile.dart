@@ -1,4 +1,4 @@
-import 'package:survey/controllers/profile_controller.dart';
+import 'package:migrant_profile/controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

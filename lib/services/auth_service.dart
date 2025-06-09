@@ -1,5 +1,5 @@
-import 'package:survey/data/enums.dart';
-import 'package:survey/services/user_service.dart';
+import 'package:migrant_profile/data/enums.dart';
+import 'package:migrant_profile/services/user_service.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {

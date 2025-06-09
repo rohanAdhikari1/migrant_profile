@@ -1,11 +1,10 @@
-import 'package:survey/Pages/Auth/login.dart';
-import 'package:survey/Pages/home_page.dart';
-import 'package:survey/services/user_service.dart';
-import 'package:survey/utils/locale_string.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:nepali_utils/nepali_utils.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
+import 'package:migrant_profile/pages/auth/login.dart';
+import 'package:migrant_profile/pages/home_page.dart';
+import 'package:migrant_profile/services/user_service.dart';
+import 'package:migrant_profile/utils/locale_string.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +14,7 @@ void main() async {
   bool isLoggedIn = userData['token']?.isNotEmpty ??
       false && userData['id'] != 0 && userData['first_name']?.isNotEmpty ??
       false;
-  NepaliUtils(Language.nepali);
+  // NepaliUtils(Language.nepali);
   runApp(MyApp(isLoggedIn: isLoggedIn));
   FlutterNativeSplash.remove();
 }

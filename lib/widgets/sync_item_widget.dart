@@ -1,5 +1,5 @@
-import 'package:survey/controllers/database_sync_controller.dart';
-import 'package:survey/models/data.dart';
+import 'package:migrant_profile/controllers/database_sync_controller.dart';
+import 'package:migrant_profile/models/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

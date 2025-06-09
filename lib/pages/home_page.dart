@@ -1,11 +1,9 @@
-import 'package:survey/Pages/complete_datas.dart';
-import 'package:survey/Pages/database_sync.dart';
-import 'package:survey/Pages/drafts.dart';
-import 'package:survey/Pages/notification.dart';
-import 'package:survey/controllers/app_controller.dart';
-import 'package:survey/controllers/home_controller.dart';
-import 'package:survey/pages/forms/step_first.dart';
-import 'package:survey/widgets/nav_drawer.dart';
+import 'package:migrant_profile/Pages/complete_datas.dart';
+import 'package:migrant_profile/Pages/database_sync.dart';
+import 'package:migrant_profile/Pages/drafts.dart';
+import 'package:migrant_profile/controllers/home_controller.dart';
+import 'package:migrant_profile/pages/forms/step_first.dart';
+import 'package:migrant_profile/widgets/nav_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_utils/nepali_utils.dart';
 import 'package:get/get.dart';
@@ -109,12 +107,20 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 26),
-                      child: Text("Survey System",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue[700]
-                        ),),
+                      child: Column(children: [
+                        Text("Digital Labor Migration",
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue[700]
+                          ),),
+                        Text("Profile System",
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue[700]
+                          ),),
+                      ],)
                     ),
                     Expanded(
                       child: SingleChildScrollView(

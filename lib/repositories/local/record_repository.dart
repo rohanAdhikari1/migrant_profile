@@ -1,28 +1,46 @@
-import 'package:survey/data/local/db_helper.dart';
-import 'package:survey/models/data.dart';
+import 'package:migrant_profile/data/local/db_helper.dart';
+import 'package:migrant_profile/models/data.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RecordRepository{
   get _db => DBHelper.getInstance;
 
-  Future<int> insertRecordPart1(String name,String address1,String type,String address2,String ward,String gender,String phone,String occupation,int totalMale,int totalFemale,int countMale,int countFemale) async{
+  Future<int> insertRecordPart1(String name,String address1,String address2,String ward,String gender,String phone) async{
     var db = await _db.getDB();
-    int rowEffected1 = await db.insert(DBHelper.TABLE_HOUSE_REPRESENTATIVE,
+    int rowEffected = await db.insert(DBHelper.TABLE_HOUSE_REPRESENTATIVE,
         {
           'name':name,
           'ward_no':ward,
           'gender':gender,
           'contact_no':phone,
-          'occupation':occupation,
-          'address_1':address1,
-          'address_2':address2,
-          'family_members_male_count':totalMale,
-          'family_members_female_count':totalFemale,
-          'family_members_migration_male_count':countMale,
-          'family_members_migration_female_count ':countFemale,
+          'toll_name':address1,
+          'toll_no':address2,
+          'house_no':address2,
           'created_at':DateTime.now().toIso8601String(),
           'updated_at' : DateTime.now().toIso8601String(),
         },conflictAlgorithm: ConflictAlgorithm.replace);
+    return rowEffected;
+  }
+
+  Future<int> insertRecordPart2(int recordId,int totalMale,int totalFemale,int countMale,int countFemale,String type,
+      String occupation,String name,String relation,String caste,String motherTongue,String religion) async{
+    var db = await _db.getDB();
+    int rowEffected1 = await db.update(DBHelper.TABLE_HOUSE_REPRESENTATIVE,
+        {
+          'family_members_male_count':totalMale,
+          'family_members_female_count':totalFemale,
+          'family_members_migration_male_count':countMale,
+          'family_members_migration_female_count':countFemale,
+          'occupation':occupation,
+          'information_provider_name':name,
+          'ip_relation_to_hr':relation,
+          'information_provider_caste':caste,
+          'information_provider_mother_tongue':motherTongue,
+          'religion':religion,
+          'updated_at' : DateTime.now().toIso8601String(),
+        },
+        where: 'id = ?',
+        whereArgs: [recordId]);
     int rowEffected = await db.insert(DBHelper.TABLE_RECORD, {
       'house_representative_id':rowEffected1,
       'type':type,
@@ -34,55 +52,54 @@ class RecordRepository{
     return rowEffected;
   }
 
-   Future<void> updateRecordGroupAPart1(int recordId,String name,int age,String country,String visitTime,String foreignOccupation,String gender, String caste,String maritalStatus,String contactTimes) async{
+   Future<void> updateRecordGroupAPart1(int recordId,String name,int age,String country,String visitTime,String gender, String caste,String maritalStatus,String educationStatus) async{
    var db = await _db.getDB();
    await db.update(DBHelper.TABLE_RECORD,
        {
          'name':name,
          'gender':gender,
          'age':age,
-         'caste':caste,
+         'relation_to_hr':caste,
          'marital_status':maritalStatus,
+         'education_status':educationStatus,
          'migrated_country':country,
          'migrated_times':visitTime,
-         'foreign_occupation':foreignOccupation,
-         'home_contact_times':contactTimes,
          'updated_at': DateTime.now().toIso8601String(),
        },
        where: 'id = ?',
        whereArgs: [recordId]);
  }
 
-  Future<void> updateRecordGroupAPart2(int recordId,int isSkilled,String skillName,int havePermission,String permissionMethod,int haveDocumentInHome,String document) async{
+  Future<void> updateRecordGroupAPart2(int recordId,String travelMethod,String travelRoad,String visaType,String travelFee,String feFeeMethod,
+      int isSkilled,int havePermission,String haveDocumentInHome) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
+          'travel_method': travelMethod,
+          'travel_road':travelRoad,
+          'visa_type':visaType,
           'is_skilled':isSkilled,
-          'skilled_occupation': skillName,
-          'have_communication_permission':havePermission,
-          'communication_permission_method':permissionMethod,
+          // 'skilled_occupation': skillName,
           'have_document_in_home':haveDocumentInHome,
-          'document_type':document,
+          'have_communication_permission':havePermission,
+          'fe_fee':travelFee,
+          'fe_fee_paid_method':feFeeMethod,
+          // 'communication_permission_method':permissionMethod,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupAPart3(int recordId,String travelMethod,String travelRoad,String travelFee,String paidSource,String loanSource,String interestOnLoan,int loanPaid,String loanPaidDuration,int abroadProblem,String problemType) async{
+  Future<void> updateRecordGroupAPart3(int recordId,String foreignOccupation,int facedProblemAbroad,String facedProblemType,int facedFamilyPmAb,String facedFamilyPmAbType) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
-          'travel_method': travelMethod,
-          'travel_road':travelRoad,
-          'travel_fee':travelFee,
-          'expense_source_abroad':paidSource,
-          'loan_taken_from':loanSource,
-          'interest_rate_on_loan':interestOnLoan,
-          'is_loan_fully_repaid':loanPaid,
-          'loan_repayment_duration':loanPaidDuration,
-          'faced_problems_abroad':abroadProblem,
-          'problem_type':problemType,
+          'foreign_occupation': foreignOccupation,
+          'faced_problems_abroad':facedProblemAbroad,
+          'problem_type':facedProblemType,
+          'home_problem':facedFamilyPmAb,
+          'home_problem_type':facedFamilyPmAbType,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
@@ -119,97 +136,93 @@ class RecordRepository{
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupAPart5(int recordId,int isRemarried,String reMarriedGender,int isElderAloneOnHome,int isChildrenOutForStudy,String childrenStudyLocation,String foreignMonthlyIncome,String salaryChangedDueTOCovid,String remittanceMethod,int remittanceCount,String remittanceAmount) async{
+  Future<void> updateRecordGroupAPart5(int recordId,String reMarriedGender,int isElderAloneOnHome,int isChildrenOutForStudy,String childrenOutForStudy,int haveSendMoney,String moneyNotSendProblem,String remittanceCount,String remittanceAmount) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
-          'is_remarried':isRemarried,
           'remarried_gender':reMarriedGender,
           'is_elder_only_home':isElderAloneOnHome,
           'is_children_out_for_study':isChildrenOutForStudy,
-          'children_study_location':childrenStudyLocation,
-          'total_foreign_income':foreignMonthlyIncome,
-          'is_salary_changed_due_to_covid':salaryChangedDueTOCovid.isNotEmpty,
-          'salary_change':salaryChangedDueTOCovid,
-          'remittance_method':remittanceMethod,
-          'previous_year_remittance_count':remittanceCount,
-          'previous_year_remittance_amount':remittanceAmount,
+          'children_out_for_study':childrenOutForStudy,
+          'have_send_money':haveSendMoney, //int
+          'money_not_send_problem':moneyNotSendProblem, //string
+          'remittance_count':remittanceCount, //int
+          'remittance_amount':remittanceAmount,//string
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupAPart6(int recordId,String remittanceSavedSource,String planAfterReturn,int landFromRemittance,String landFromRemittanceLocation,String migrationPlanLocation,String remittanceSpendSource) async{
+  Future<void> updateRecordGroupAPart6(int recordId,String remittanceSpendSource,int landFromRemittance,String landFromRemittanceLocation,
+      String remittanceSavedSource,String migrationPlanLocation,String planAfterReturn,String remittanceCollectMethod) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
-          'is_remittance_saved': remittanceSavedSource.isNotEmpty,
-          'remittance_saving_method': remittanceSavedSource,
-          'is_land_purchased':landFromRemittance,
-          'plan_after_return':planAfterReturn,
-          'land_purchased_location':landFromRemittanceLocation,
-          'have_plan_to_migrate':migrationPlanLocation.isNotEmpty,
-          'migration_plan_location':migrationPlanLocation,
           'remittance_spend_source':remittanceSpendSource,
+          'is_land_purchased':landFromRemittance,
+          'land_purchased_location':landFromRemittanceLocation,
+          'remittance_saving_method': remittanceSavedSource,
+          'migration_plan_location':migrationPlanLocation,
+          'plan_after_return':planAfterReturn,
+          'remittance_collect_method':remittanceCollectMethod,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupBPart1(int recordId,String name,String gender,int age,String maritalStatus,String caste,int totalFamilyReturnMale, int totalFamilyReturnFeMale,String homeReturnAfter,String homeReturnReason,String country,int migratedTimes) async{
+  Future<void> updateRecordGroupBPart1(int recordId,String name,String gender,int age,String maritalStatus,String relation,
+      String homeReturnAfter,String homeReturnDuration,String homeReturnReason,String country, String educationStatus,
+      int totalMaleReturn,int totalFeMaleReturn,String phone) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
           'name':name,
-          'gender':gender,
           'age':age,
-          'caste':caste,
+          'gender':gender,
+          'contact_no':phone,
+          'relation_to_hr':relation,
+          'education_status':educationStatus,
           'marital_status':maritalStatus,
-          'total_family_returned':totalFamilyReturnMale+totalFamilyReturnFeMale,
-          'total_family_returned_male':totalFamilyReturnMale,
-          'total_family_returned_female':totalFamilyReturnFeMale,
-          'home_returned_after':homeReturnAfter,
-          'home_return_reason':homeReturnReason,
           'migrated_country':country,
-          'migrated_times':migratedTimes,
+          'home_returned_after':homeReturnAfter,
+          'home_returned_after_duration':homeReturnDuration,
+          'home_return_reason':homeReturnReason,
+          'total_family_returned':totalMaleReturn+totalFeMaleReturn,
+          'total_family_returned_male':totalMaleReturn,
+          'total_family_returned_female':totalFeMaleReturn,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupBPart2(int recordId,int wantTogoAgain,String occupationNow,String employedAs, String skillBeforeMigration, String skillOccupation,int knowSkillTest,int haveDoneSkillTest,int wantSkillTest) async{
+  Future<void> updateRecordGroupBPart2(int recordId,int wantTogoAgain, String isDisabled,String workOnForeign,String workExp,String skillTrainingAfterReturn,
+      String occupationNow,String businessType) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
           'want_to_go_again':wantTogoAgain,
+          'is_disabled_on_foreign':isDisabled,
+          'work_on_foreign':workOnForeign,
+          'work_exp_on_fe':workExp,
+          'skill_training_after_return':skillTrainingAfterReturn,
           'occupation_now':occupationNow,
-          'is_employed':employedAs.isNotEmpty,
-          'employed_as':employedAs,
-          'skill_before_migration':skillBeforeMigration,
-          'is_skilled':skillBeforeMigration.isNotEmpty,
-          'skilled_occupation':skillOccupation,
-          'know_skill_test':knowSkillTest,
-          'have_done_skill_test':haveDoneSkillTest,
-          'want_to_skill_test':wantSkillTest,
+          'business_type':businessType,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
         whereArgs: [recordId]);
   }
 
-  Future<void> updateRecordGroupBPart3(int recordId,String savedForeignIncome,int planToBusiness,int doingBusiness,String remittanceSpendSource,String businessPlan,String currentBusiness) async{
+  Future<void> updateRecordGroupBPart3(int recordId,String difficulties,String desiredWork,String requirements) async{
     var db = await _db.getDB();
     await db.update(DBHelper.TABLE_RECORD,
         {
-          'saved_foreign_income':savedForeignIncome,
-          'plan_to_business':planToBusiness,
-          'doing_business':doingBusiness,
-          'remittance_spend_source':remittanceSpendSource,
-          'business_plan':businessPlan,
-          'current_business':currentBusiness,
+          'difficulties_to_start_business':difficulties,
+          'desired_or_current_work_area_in_nepal':desiredWork,
+          'requirements_for_employment_in_nepal':requirements,
           'updated_at': DateTime.now().toIso8601String(),
         },
         where: 'id = ?',
@@ -244,7 +257,7 @@ class RecordRepository{
 
   Future<List<DataModel>> getCompletedRecords() async{
    var db = await _db.getDB();
-   var result = await db.rawQuery('''SELECT id,name,contact_no,migrated_country,caste,type FROM ${DBHelper.TABLE_RECORD} WHERE is_completed = 1 ORDER BY updated_at desc''');
+   var result = await db.rawQuery('''SELECT id,name,contact_no,migrated_country,type FROM ${DBHelper.TABLE_RECORD} WHERE is_completed = 1 ORDER BY updated_at desc''');
    List<Map<String, dynamic>> recordMap = List<Map<String, dynamic>>.from(result);
    List<DataModel> records = recordMap.map((Map<String, dynamic> map) => DataModel.fromMap(map)).toList();
    return records;
@@ -252,7 +265,7 @@ class RecordRepository{
 
   Future<List<DataModel>> getDraftRecords() async{
     var db = await _db.getDB();
-    var result = await db.rawQuery('''SELECT id,name,contact_no,migrated_country,caste,type FROM ${DBHelper.TABLE_RECORD} WHERE is_completed = 0 ORDER BY updated_at desc''');
+    var result = await db.rawQuery('''SELECT id,name,contact_no,migrated_country,type FROM ${DBHelper.TABLE_RECORD} WHERE is_completed = 0 ORDER BY updated_at desc''');
     List<Map<String, dynamic>> recordMap = List<Map<String, dynamic>>.from(result);
     List<DataModel> records = recordMap.map((Map<String, dynamic> map) => DataModel.fromMap(map)).toList();
     return records;
@@ -284,7 +297,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupAPart1(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,name,gender,age,marital_status,migrated_country,caste,foreign_occupation,home_contact_times,migrated_times FROM 
+    SELECT id,name,age,relation_to_hr,marital_status,education_status,migrated_country,migrated_times,gender FROM 
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -292,7 +305,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupAPart2(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,is_skilled,skilled_occupation,have_communication_permission,communication_permission_method,have_document_in_home,document_type FROM
+    SELECT id,travel_method,travel_road,visa_type,is_skilled,have_document_in_home,have_communication_permission,fe_fee,fe_fee_paid_method FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -300,7 +313,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupAPart3(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,travel_method,travel_road,travel_fee,expense_source_abroad,loan_taken_from,interest_rate_on_loan,is_loan_fully_repaid,loan_repayment_duration,faced_problems_abroad,problem_type FROM
+    SELECT id,foreign_occupation,faced_problems_abroad,problem_type,home_problem,home_problem_type FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -316,7 +329,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupAPart5(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,is_remarried,remarried_gender,is_elder_only_home,is_children_out_for_study,children_study_location,total_foreign_income,salary_change,remittance_method,previous_year_remittance_count,previous_year_remittance_amount FROM
+    SELECT id,remarried_gender,is_elder_only_home,is_children_out_for_study,children_out_for_study,have_send_money,money_not_send_problem,remittance_count,remittance_amount FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -324,7 +337,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupAPart6(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,is_remittance_saved,remittance_saving_method,is_land_purchased,land_purchased_location,have_plan_to_migrate,migration_plan_location,plan_after_return,remittance_spend_source FROM
+    SELECT id, remittance_spend_source,is_land_purchased,land_purchased_location,remittance_saving_method,migration_plan_location,plan_after_return,remittance_collect_method FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -332,8 +345,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupBPart1(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,name,gender,age,caste,marital_status,total_family_returned,total_family_returned_male,total_family_returned_female,
-    home_returned_after,home_return_reason,migrated_country,migrated_times FROM
+    SELECT id,name,age,gender,contact_no,relation_to_hr,education_status,marital_status,migrated_country,home_returned_after,home_returned_after_duration,home_return_reason,total_family_returned,total_family_returned_male,total_family_returned_female FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -341,7 +353,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupBPart2(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,want_to_go_again,occupation_now,is_employed,employed_as,skill_before_migration,is_skilled,skilled_occupation,know_skill_test,have_done_skill_test,want_to_skill_test FROM
+    SELECT id,want_to_go_again,is_disabled_on_foreign,work_on_foreign,work_exp_on_fe,skill_training_after_return,occupation_now,business_type FROM
     ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
@@ -349,7 +361,7 @@ class RecordRepository{
   Future<Map<String,dynamic>> retrieveRecordGroupBPart3(int recordId) async{
     var db = await _db.getDB();
     var result =  await db.rawQuery('''
-    SELECT id,saved_foreign_income,plan_to_business,doing_business,remittance_spend_source,business_plan,current_business FROM ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
+    SELECT id,difficulties_to_start_business,desired_or_current_work_area_in_nepal,requirements_for_employment_in_nepal FROM ${DBHelper.TABLE_RECORD} WHERE id = $recordId''');
     return result.isNotEmpty ? result.first : null;
   }
 

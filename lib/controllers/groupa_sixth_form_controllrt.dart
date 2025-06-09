@@ -1,18 +1,19 @@
-import 'package:survey/pages/forms/location_form.dart';
-import 'package:survey/repositories/local/record_repository.dart';
+import 'package:migrant_profile/pages/forms/location_form.dart';
+import 'package:migrant_profile/repositories/local/record_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class GroupaSixthFormController  extends GetxController {
+class GroupaSixthFormController extends GetxController {
   final RecordRepository recordRepository = RecordRepository();
   final formField = GlobalKey<FormState>();
   RxBool isLoading = false.obs;
-  RxString remittanceSavedSource = ''.obs;
-  RxString planAfterReturn = ''.obs;
   RxString landFromRemittance = ''.obs;
   RxString landFromRemittanceLocation = ''.obs;
+  RxString remittanceSavedSource = ''.obs;
   RxString migrationPlanLocation = ''.obs;
+  RxString planAfterReturn = ''.obs;
 
+  var  selectedRemittanceCollectMethod = <String>[].obs;
   var selectedRemittanceSpend = <String>[].obs;
 
   @override
@@ -22,52 +23,65 @@ class GroupaSixthFormController  extends GetxController {
   }
 
   void loadIfAvailable() async {
-    Map<String, dynamic> records = await recordRepository.retrieveRecordGroupAPart6(Get.arguments);
-    remittanceSavedSource.value = records['remittance_saving_method']??'';
-    landFromRemittance.value = records['is_land_purchased']?.toString()??'';
-    landFromRemittanceLocation.value = records['land_purchased_location']??'';
-    migrationPlanLocation.value = records['migration_plan_location']??'';
-    planAfterReturn.value = records['plan_after_return']??'';
-    initializeFromCommaSeparatedValues(records['remittance_spend_source']??'');
+    Map<String, dynamic> records = await recordRepository
+        .retrieveRecordGroupAPart6(Get.arguments);
+    initializeFromCommaSeparatedValues(selectedRemittanceSpend,
+    records['remittance_spend_source'] ?? '',
+    );
+    landFromRemittance.value = records['is_land_purchased']?.toString() ?? '';
+    landFromRemittanceLocation.value = records['land_purchased_location'] ?? '';
+    remittanceSavedSource.value = records['remittance_saving_method'] ?? '';
+    migrationPlanLocation.value = records['migration_plan_location'] ?? '';
+    planAfterReturn.value = records['plan_after_return'] ?? '';
+    initializeFromCommaSeparatedValues(selectedRemittanceCollectMethod,
+    records['remittance_collect_method'] ?? '',
+    );
   }
 
   @override
-  void onClose(){
+  void onClose() {
     super.onClose();
     formField.currentState?.reset();
   }
 
-  String getCommaSeparatedValues() {
-    return selectedRemittanceSpend.join(',');
+  String getCommaSeparatedValues(var source) {
+    return source.join(',');
   }
 
-  void initializeFromCommaSeparatedValues(String values) {
-    selectedRemittanceSpend.value = values.isNotEmpty ? values.split(',') : [];
+  void initializeFromCommaSeparatedValues(var source,String values) {
+    source.value = values.isNotEmpty ? values.split(',') : [];
   }
 
-  void toggleSelection(String item) {
-    if (selectedRemittanceSpend.contains(item)) {
-      selectedRemittanceSpend.remove(item);
+  void toggleSelection(var source,String item) {
+    if (source.contains(item)) {
+      source.remove(item);
     } else {
-      selectedRemittanceSpend.add(item);
+      source.add(item);
     }
   }
 
-  void submit() async{
-    if(formField.currentState!.validate()) {
+  void submit() async {
+    if (formField.currentState!.validate()) {
       isLoading.value = true;
       bool c;
       try {
-        c=false;
+        c = false;
         var recordId = Get.arguments;
-        await recordRepository.updateRecordGroupAPart6(recordId, remittanceSavedSource.value, planAfterReturn.string, int.parse(landFromRemittance.value), landFromRemittanceLocation.value, migrationPlanLocation.value,getCommaSeparatedValues());
-        Get.off(LocationForm(),arguments: recordId);
-        c=true;
+        await recordRepository.updateRecordGroupAPart6(recordId,
+            getCommaSeparatedValues(selectedRemittanceSpend),
+            int.parse(landFromRemittance.value),
+            landFromRemittanceLocation.value,
+            remittanceSavedSource.value,
+            migrationPlanLocation.value, 
+            planAfterReturn.value,
+            getCommaSeparatedValues(selectedRemittanceCollectMethod));
+        Get.off(LocationForm(), arguments: recordId);
+        c = true;
       } catch (e) {
         print(e);
         c = false;
       }
-      if(!c){
+      if (!c) {
         Get.snackbar(
           "Error",
           "Something Went Wrong! Please try again later.",

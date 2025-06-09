@@ -1,8 +1,7 @@
-import 'package:survey/Pages/Auth/login.dart';
-import 'package:survey/controllers/home_controller.dart';
-import 'package:survey/data/local/db_helper.dart';
-import 'package:survey/pages/profile.dart';
-import 'package:survey/services/user_service.dart';
+import 'package:migrant_profile/Pages/Auth/login.dart';
+import 'package:migrant_profile/controllers/home_controller.dart';
+import 'package:migrant_profile/pages/profile.dart';
+import 'package:migrant_profile/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +22,7 @@ class NavDrawer extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-               "ग्रामथान गाउँपालिका",
+               'app_name'.tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
@@ -76,7 +75,7 @@ class NavDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () async {
               userService.clearUserData();
-              await DBHelper.getInstance.delete();
+              // await DBHelper.getInstance.delete();
               Get.snackbar(
                 "Logged Out",
                 "You have been successfully logged out.",

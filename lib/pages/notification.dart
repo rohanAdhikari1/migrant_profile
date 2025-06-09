@@ -1,5 +1,5 @@
-import 'package:survey/models/notification.dart';
-import 'package:survey/widgets/notification_item_widget.dart';
+import 'package:migrant_profile/models/notification.dart';
+import 'package:migrant_profile/widgets/notification_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class Notifications extends StatefulWidget {

@@ -1,5 +1,4 @@
-import 'package:survey/controllers/groupa_sixth_form_controllrt.dart';
-import 'package:survey/pages/forms/location_form.dart';
+import 'package:migrant_profile/controllers/groupa_sixth_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +15,7 @@ class _GroupaSixthState extends State<GroupaSixth> {
   Widget build(BuildContext context) {
     final GroupaSixthFormController controller = Get.put(
         GroupaSixthFormController());
-    final _remittanceSpend = [
+    final remittanceSpend = [
       'घर खर्च तथा खानपान',
       'बचत',
       'ऋण तिर्न',
@@ -26,6 +25,14 @@ class _GroupaSixthState extends State<GroupaSixth> {
       'ऋण लगानी',
       'व्यवसाय सुरुवात',
       'स्वास्थ्य तथा औषधि उपचार खर्च',
+    ];
+    final remittanceCollectMethod = [
+      'सहकारीबाट',
+      'आईएमइ सेन्टरबाट',
+      'बैंकबाट',
+      'फाइनान्स कम्पनिबाट',
+      'हुण्डीबाट',
+      'साथीभाई बाट',
     ];
 
     return Scaffold(
@@ -60,7 +67,7 @@ class _GroupaSixthState extends State<GroupaSixth> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                          "उक्त विदेशवाट पठाएको रकम के के मा खर्च गर्नु भयो ? (यस प्रस्न र यस भन्दा तल खर्चको शीर्षकमा वढी अर्थात आवश्यक समय लगाएर कापीमा टिपोट गरेर मात्र भर्ने)",
+                                          "गत १ वर्षभित्र प्राप्त रेमिट्यान्स के के मा खर्च गर्नु भयो?",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                     ),
@@ -74,7 +81,7 @@ class _GroupaSixthState extends State<GroupaSixth> {
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment
                                         .start,
-                                    children: _remittanceSpend.map((option) {
+                                    children: remittanceSpend.map((option) {
                                       return Row(
                                         children: [
                                           Expanded(
@@ -87,7 +94,7 @@ class _GroupaSixthState extends State<GroupaSixth> {
                                                       option),
                                                   onChanged: (_) =>
                                                       controller
-                                                          .toggleSelection(
+                                                          .toggleSelection(controller.selectedRemittanceSpend,
                                                           option),
                                                 ),
                                                 Text(option),
@@ -101,6 +108,148 @@ class _GroupaSixthState extends State<GroupaSixth> {
                                 }),
                               ],
                             ),
+                            Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "यदि वैदेशिक रोजगारबाट प्राप्त रेमिट्यान्सबाट घर घडेरी किन्नु भएको छ?",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(() {
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.landFromRemittance.value
+                                        .isNotEmpty ? controller
+                                        .landFromRemittance.value : null,
+                                    hint: Text(
+                                        "विदेशको ... किन्नु भएको छ?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: '1',
+                                        child: Text('छ'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '0',
+                                        child: Text('छैन'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.landFromRemittance.value =
+                                      value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+                            Obx(() {
+                              return controller.landFromRemittance.value == '1'?
+                              Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "विदेशको कमाइले घडेरी किन्नु भएको छ भने कहाँ किन्नु भएको छ?",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Obx(() {
+                                    return DropdownButtonFormField<String>(
+                                      value: controller
+                                          .landFromRemittanceLocation
+                                          .value.isNotEmpty
+                                          ? controller
+                                          .landFromRemittanceLocation.value
+                                          : null,
+                                      hint: Text("विदेशको ... भएको छ?"),
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: 'पालिका क्षेत्रमा',
+                                          child: Text('पालिका क्षेत्रमा'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'घर नजिकै शहरमा',
+                                          child: Text('घर नजिकै शहरमा'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'सदरमुकाम भएको शहरमा',
+                                          child: Text('सदरमुकाम भएको शहरमा'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'प्रदेश कार्यालय भएको शहरमा',
+                                          child: Text(
+                                              'प्रदेश कार्यालय भएको शहरमा'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'काठमान्डौमा',
+                                          child: Text('काठमान्डौमा'),
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        controller.landFromRemittanceLocation
+                                            .value = value!;
+                                      },
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.blue[50],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              12),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12, horizontal: 8),
+                                      ),
+                                      // validator: (value) {
+                                      //   if (value == null || value.isEmpty) {
+                                      //     return 'required'.tr;
+                                      //   }
+                                      //   return null;
+                                      // },
+                                    );
+                                  }),
+                                ],
+                              ):SizedBox();
+                            }),
                             Column(
                               children: [
                                 Row(
@@ -163,6 +312,84 @@ class _GroupaSixthState extends State<GroupaSixth> {
                                     //   }
                                     //   return null;
                                     // },
+                                  );
+                                }),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                          "वसाइ सरेर जाने योजना छ ? छ भने कहाँ ?",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(() {
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.migrationPlanLocation
+                                        .value
+                                        .isNotEmpty ? controller
+                                        .migrationPlanLocation.value : null,
+                                    hint: Text(" कहाँ ?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'बसाई सरेर जाने योजना छैन',
+                                        child: Text('बसाई सरेर जाने योजना छैन'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'पालिका क्षेत्रमा',
+                                        child: Text('पालिका क्षेत्रमा'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'घर नजिकै शहरमा',
+                                        child: Text('घर नजिकै शहरमा'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'सदरमुकाम भएको शहरमा',
+                                        child: Text('सदरमुकाम भएको शहरमा'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'प्रदेश कार्यालय भएको शहरमा',
+                                        child: Text(
+                                            'प्रदेश कार्यालय भएको शहरमा'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'काठमान्डौमा',
+                                        child: Text('काठमान्डौमा'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.migrationPlanLocation.value =
+                                      value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
                                   );
                                 }),
                               ],
@@ -266,213 +493,47 @@ class _GroupaSixthState extends State<GroupaSixth> {
                             Column(
                               children: [
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "विदेशको कमाइले तपाई अथवा तपाईको श्रीमान, छोरा, छोरीले घडेरी किन्नु भएको छ?",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Obx(() {
-                                  return DropdownButtonFormField<String>(
-                                    value: controller.landFromRemittance.value
-                                        .isNotEmpty ? controller
-                                        .landFromRemittance.value : null,
-                                    hint: Text(
-                                        "विदेशको ... किन्नु भएको छ?"),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: '1',
-                                        child: Text('छ'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: '0',
-                                        child: Text('छैन'),
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      controller.landFromRemittance.value =
-                                      value!;
-                                    },
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.blue[50],
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 8),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'required'.tr;
-                                      }
-                                      return null;
-                                    },
-                                  );
-                                }),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "विदेशको कमाइले घडेरी किन्नु भएको छ भने कहाँ किन्नु भएको छ?",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Obx(() {
-                                  return DropdownButtonFormField<String>(
-                                    value: controller.landFromRemittanceLocation
-                                        .value.isNotEmpty
-                                        ? controller
-                                        .landFromRemittanceLocation.value
-                                        : null,
-                                    hint: Text("विदेशको ... भएको छ?"),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: 'पालिका क्षेत्रमा',
-                                        child: Text('पालिका क्षेत्रमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'घर नजिकै शहरमा',
-                                        child: Text('घर नजिकै शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'सदरमुकाम भएको शहरमा',
-                                        child: Text('सदरमुकाम भएको शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'प्रदेश कार्यालय भएको शहरमा',
-                                        child: Text(
-                                            'प्रदेश कार्यालय भएको शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'काठमान्डौमा',
-                                        child: Text('काठमान्डौमा'),
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      controller.landFromRemittanceLocation
-                                          .value = value!;
-                                    },
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.blue[50],
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 8),
-                                    ),
-                                    // validator: (value) {
-                                    //   if (value == null || value.isEmpty) {
-                                    //     return 'required'.tr;
-                                    //   }
-                                    //   return null;
-                                    // },
-                                  );
-                                }),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                          "वसाइ सरेर जाने योजना छ ? छ भने कहाँ ?",
+                                          "विदेशवाट पठाएको रकम कहाँबाट लिनेगर्नु भएको छ ?",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                     ),
-                                    Text(
-                                      "*",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    Text("*",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ))
                                   ],
                                 ),
                                 Obx(() {
-                                  return DropdownButtonFormField<String>(
-                                    value: controller.migrationPlanLocation
-                                        .value
-                                        .isNotEmpty ? controller
-                                        .migrationPlanLocation.value : null,
-                                    hint: Text(" कहाँ ?"),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: 'बसाई सरेर जाने योजना छैन',
-                                        child: Text('बसाई सरेर जाने योजना छैन'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'पालिका क्षेत्रमा',
-                                        child: Text('पालिका क्षेत्रमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'घर नजिकै शहरमा',
-                                        child: Text('घर नजिकै शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'सदरमुकाम भएको शहरमा',
-                                        child: Text('सदरमुकाम भएको शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'प्रदेश कार्यालय भएको शहरमा',
-                                        child: Text(
-                                            'प्रदेश कार्यालय भएको शहरमा'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'काठमान्डौमा',
-                                        child: Text('काठमान्डौमा'),
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      controller.migrationPlanLocation.value =
-                                      value!;
-                                    },
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.blue[50],
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 8),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'required'.tr;
-                                      }
-                                      return null;
-                                    },
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: remittanceCollectMethod.map((
+                                        option) {
+                                      return Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Checkbox(
+                                                  value: controller
+                                                      .selectedRemittanceCollectMethod
+                                                      .contains(
+                                                      option),
+                                                  onChanged: (_) =>
+                                                      controller
+                                                          .toggleSelection(controller.selectedRemittanceCollectMethod,
+                                                          option),
+                                                ),
+                                                Text(option),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }).toList(),
                                   );
                                 }),
                               ],

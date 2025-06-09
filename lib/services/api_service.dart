@@ -1,5 +1,5 @@
-import 'package:survey/Pages/Auth/login.dart';
-import 'package:survey/services/user_service.dart';
+import 'package:migrant_profile/Pages/Auth/login.dart';
+import 'package:migrant_profile/services/user_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

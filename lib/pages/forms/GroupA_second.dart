@@ -1,5 +1,4 @@
-import 'package:survey/controllers/groupa_second_form_controllrt.dart';
-import 'package:survey/pages/forms/GroupA_third.dart';
+import 'package:migrant_profile/controllers/groupa_second_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +57,7 @@ class _GroupaSecondState extends State<GroupaSecond> {
                               children: [
                                 Row(
                                   children: [
-                                    Text("सिप तालिम सिकेर गएको हो / होइन ?",
+                                    Text("कुन माध्यमबाट जानु भएको हो ?",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     Text("*",
@@ -69,20 +68,38 @@ class _GroupaSecondState extends State<GroupaSecond> {
                                 ),
                                 Obx(() {
                                   return DropdownButtonFormField<String>(
-                                    value: controller.isSkilled.value.isNotEmpty?controller.isSkilled.value:null,
-                                    hint: Text("हो / होइन ?"),
+                                    value: controller.travelMethod.value
+                                        .isNotEmpty ? controller.travelMethod
+                                        .value : null,
+                                    hint: Text("कुन माध्यमबाट जानु भएको हो ?"),
                                     items: [
                                       DropdownMenuItem(
-                                        value: '1',
-                                        child: Text('हो'),
+                                        value: 'मेनपावर कम्पनी',
+                                        child: Text('मेनपावर कम्पनी'),
                                       ),
                                       DropdownMenuItem(
-                                        value: '0',
-                                        child: Text('होइन'),
+                                        value: 'एजेन्ट',
+                                        child: Text('एजेन्ट'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'सरकारी माध्यम (जि.टु.जी.)',
+                                        child: Text('सरकारी माध्यम (जि.टु.जी.)'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'व्यक्तिगत',
+                                        child: Text('व्यक्तिगत'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'आफन्त मार्फत',
+                                        child: Text('आफन्त मार्फत'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'थाहा छैन',
+                                        child: Text('थाहा छैन'),
                                       ),
                                     ],
                                     onChanged: (value) {
-                                      controller.isSkilled.value = value!;
+                                      controller.travelMethod.value = value!;
                                     },
                                     decoration: InputDecoration(
                                       filled: true,
@@ -107,40 +124,13 @@ class _GroupaSecondState extends State<GroupaSecond> {
                             Column(
                               children: [
                                 Row(
-                                  children: [
-                                    Text("सिप सिकेर गएको भए सिपको नाम ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: controller.skillNameController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.blue[50],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: 'सिपको नाम',
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 12),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        "विदेश जानु अघि सूचना केन्द्रबाट सूचनाजानकारी लिएर गएको ?",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    Text(
+                                      "कुन वाटो भएर गएको हो ?",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -155,20 +145,31 @@ class _GroupaSecondState extends State<GroupaSecond> {
                                 ),
                                 Obx(() {
                                   return DropdownButtonFormField<String>(
-                                    value: controller.havePermission.value.isNotEmpty?controller.havePermission.value:null,
-                                    hint: Text("विदेश जानु अघि ... गएको ?"),
+                                    value: controller.travelRoute.value
+                                        .isNotEmpty ? controller.travelRoute
+                                        .value : null,
+                                    hint: Text(
+                                        "कुन वाटो भएर गएको हो ?"),
                                     items: [
                                       DropdownMenuItem(
-                                        value: '1',
-                                        child: Text('हो'),
+                                        value: 'नेपालको विमानस्थल',
+                                        child: Text('नेपालको विमानस्थल'),
                                       ),
                                       DropdownMenuItem(
-                                        value: '0',
-                                        child: Text('होइन'),
+                                        value: 'भारतवाट',
+                                        child: Text('भारतवाट'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'अन्यमुलुक हुदै',
+                                        child: Text('अन्यमुलुक हुदै'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'थाहा छैन',
+                                        child: Text('थाहा छैन'),
                                       ),
                                     ],
                                     onChanged: (value) {
-                                      controller.havePermission.value = value!;
+                                      controller.travelRoute.value = value!;
                                     },
                                     decoration: InputDecoration(
                                       filled: true,
@@ -191,53 +192,53 @@ class _GroupaSecondState extends State<GroupaSecond> {
                               ],
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Wrap(
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'यदि सूचना लिएर गएको हो भने कुन माध्यमबाट सूचना केन्द्र पुग्नु भएको हो ?',
+                                      "कुन भिषामा गएर काम गरिरहनु भएको छ ?",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
                                 Obx(() {
                                   return DropdownButtonFormField<String>(
-                                    value: controller.permissionSourceMethod
-                                        .value.isNotEmpty?controller.permissionSourceMethod
-                                        .value:null,
-                                    hint:  Text('यदि सूचना लिएर ... भएको हो ?'),
+                                    value: controller.selectedVisa.value
+                                        .isNotEmpty ? controller.selectedVisa
+                                        .value : null,
+                                    hint: Text("कुन भिषामा ?"),
                                     items: [
                                       DropdownMenuItem(
-                                        value: 'रिटर्नी स्वय,स्वयंसेवक',
-                                        child: Text('रिटर्नी स्वय,स्वयंसेवक'),
+                                        value: 'वर्किङ भिषा (काम गर्ने भिषा)',
+                                        child: Text('वर्किङ भिषा (काम गर्ने भिषा)'),
                                       ),
                                       DropdownMenuItem(
-                                        value: 'साथीभाई तथा पारिवारिक सदस्य ',
-                                        child:
-                                        Text('साथीभाई तथा पारिवारिक सदस्य '),
+                                        value: 'भिजिट भिषा (भ्रमण भिषा)',
+                                        child: Text('भिजिट भिषा (भ्रमण भिषा)'),
                                       ),
                                       DropdownMenuItem(
-                                        value: 'म्यानपावर कम्पनि',
-                                        child: Text('म्यानपावर कम्पनि'),
+                                        value: 'स्टुडेन्ट भिषा (पढ्न जाने भिषा)',
+                                        child: Text('स्टुडेन्ट भिषा (पढ्न जाने भिषा)'),
                                       ),
                                       DropdownMenuItem(
-                                        value: 'विद्यार्थी तथा शिक्षक',
-                                        child: Text('विद्यार्थी तथा शिक्षक'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'रेडियो',
-                                        child: Text('रेडियो'),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 'अन्य',
-                                        child: Text('अन्य'),
+                                        value: 'थाहा छैन',
+                                        child: Text('थाहा छैन'),
                                       ),
                                     ],
                                     onChanged: (value) {
-                                      controller.permissionSourceMethod.value =
-                                      value!;
+                                      controller.selectedVisa.value = value!;
                                     },
                                     decoration: InputDecoration(
                                       filled: true,
@@ -249,6 +250,12 @@ class _GroupaSecondState extends State<GroupaSecond> {
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 12, horizontal: 8),
                                     ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
                                   );
                                 }),
                               ],
@@ -260,7 +267,8 @@ class _GroupaSecondState extends State<GroupaSecond> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "घर परिवारमा विदेश जादा चाहिने डकुमेन्टको फोटोकपी वा युजर आइडी र पासवर्ड छाडेको छ?",
+                                        softWrap: true,
+                                        "विदेशजाने क्रममा तयार गरिएका कागजपत्रहरु (पासपोर्ट, सम्झौता पत्र, बीमा, मेडीकल, श्रम स्वकृति..) को प्रतिलिपी घररमा छाडेकावा पठएका छन्?",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
@@ -283,12 +291,16 @@ class _GroupaSecondState extends State<GroupaSecond> {
                                     hint: Text("घर परिवारमा ... पासवर्ड छाडेको छ?"),
                                     items: [
                                       DropdownMenuItem(
-                                        value: '1',
+                                        value: 'छ',
                                         child: Text('छ'),
                                       ),
                                       DropdownMenuItem(
-                                        value: '0',
+                                        value: 'छैन',
                                         child: Text('छैन'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'थाहा छैन',
+                                        child: Text('थाहा छैन'),
                                       ),
                                     ],
                                     onChanged: (value) {
@@ -318,51 +330,396 @@ class _GroupaSecondState extends State<GroupaSecond> {
                             Column(
                               children: [
                                 Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                          softWrap: true,
+                                          "उहाँ वैदेशिक रोजगारमा जानु पूर्व कुनै सीप तालिम लिनु भएको थियो ?",
+                                          style: TextStyle(fontWeight: FontWeight.bold)),
+                                    ),
+                                    Text("*",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ))
+                                  ],
+                                ),
+                                Obx(() {
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.isSkilled.value.isNotEmpty?controller.isSkilled.value:null,
+                                    hint: Text("थियो/ थिएन?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: '1',
+                                        child: Text('थियो'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '0',
+                                        child: Text('थिएन'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.isSkilled.value = value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "डकुमेन्टको फोटोकपी छाडेको छ भने के के छाडेको छ ?",
+                                        "विदेश जानु अघि वैदेशिक रोजगार सम्बन्धी कुनै सूचना, जानकारी तथा परामर्ष लिनु भएको थियो?",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Obx(() {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children:
-                                    _documentOptions.map((option) {
-                                      return Row(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Checkbox(
-                                                  value: controller
-                                                      .selectedDocuments
-                                                      .contains(
-                                                      option),
-                                                  onChanged: (_) =>
-                                                      controller
-                                                          .toggleSelection(
-                                                          option),
-                                                ),
-                                                Text(option),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.havePermission.value.isNotEmpty?controller.havePermission.value:null,
+                                    hint: Text("विदेश जानु अघि ... थियो?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: '1',
+                                        child: Text('थियो'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '0',
+                                        child: Text('थिएन'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.havePermission.value = value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
                                   );
                                 }),
                               ],
                             ),
+                            Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        softWrap: true,
+                                        "ववैदेशिक रोजगारमा जाँदा कति रकम तिर्नु भएको थियो ?",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(() {
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.amountPaidForFe.value.isNotEmpty?controller.amountPaidForFe.value:null,
+                                    hint: Text("... थियो?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'upto 10000',
+                                        child: Text('रु. १०,००० सम्म'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '10000-50000',
+                                        child: Text('रु. १०,००० देखि ५०,००० सम्म'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '50000-100000',
+                                        child: Text('रु. ५०,००० देखि १,००,००० सम्म'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: '100000-200000',
+                                        child: Text('रु. १,००,००० देखि २,००,००० सम्म'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'more than 200000',
+                                        child: Text('रु. २,००,००० भन्दा बढी'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.amountPaidForFe.value =
+                                      value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        softWrap: true,
+                                        "सो रकम निम्न मध्ये कुन श्रोतबाट धेरै रकम बुझाउनु भयो ?",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(() {
+                                  return DropdownButtonFormField<String>(
+                                    value: controller.amountPaidForFeMedium.value.isNotEmpty?controller.amountPaidForFeMedium.value:null,
+                                    hint: Text("... बुझाउनु भयो?"),
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 'afantabata-sapati',
+                                        child: Text('आफन्तबाट सापटी लिएर'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'rin-liera',
+                                        child: Text('ऋण लिएर (व्याज तिर्ने गरी)'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'jagga-bechera',
+                                        child: Text('जग्गा वा सम्पत्ति बेचेर'),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      controller.amountPaidForFeMedium.value =
+                                      value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.blue[50],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  );
+                                }),
+                              ],
+                            ),
+
+                            // Column(
+                            //   children: [
+                            //     Row(
+                            //       children: [
+                            //         Text("सिप सिकेर गएको भए सिपको नाम ",
+                            //             style: TextStyle(
+                            //                 fontWeight: FontWeight.bold)),
+                            //       ],
+                            //     ),
+                            //     TextFormField(
+                            //       controller: controller.skillNameController,
+                            //       decoration: InputDecoration(
+                            //         filled: true,
+                            //         fillColor: Colors.blue[50],
+                            //         border: OutlineInputBorder(
+                            //           borderRadius: BorderRadius.circular(12),
+                            //           borderSide: BorderSide.none,
+                            //         ),
+                            //         hintText: 'सिपको नाम',
+                            //         contentPadding: EdgeInsets.symmetric(
+                            //             vertical: 16, horizontal: 12),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     Wrap(
+                            //       children: [
+                            //         Text(
+                            //           'यदि सूचना लिएर गएको हो भने कुन माध्यमबाट सूचना केन्द्र पुग्नु भएको हो ?',
+                            //           style: TextStyle(
+                            //               fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     Obx(() {
+                            //       return DropdownButtonFormField<String>(
+                            //         value: controller.permissionSourceMethod
+                            //             .value.isNotEmpty?controller.permissionSourceMethod
+                            //             .value:null,
+                            //         hint:  Text('यदि सूचना लिएर ... भएको हो ?'),
+                            //         items: [
+                            //           DropdownMenuItem(
+                            //             value: 'रिटर्नी स्वय,स्वयंसेवक',
+                            //             child: Text('रिटर्नी स्वय,स्वयंसेवक'),
+                            //           ),
+                            //           DropdownMenuItem(
+                            //             value: 'साथीभाई तथा पारिवारिक सदस्य ',
+                            //             child:
+                            //             Text('साथीभाई तथा पारिवारिक सदस्य '),
+                            //           ),
+                            //           DropdownMenuItem(
+                            //             value: 'म्यानपावर कम्पनि',
+                            //             child: Text('म्यानपावर कम्पनि'),
+                            //           ),
+                            //           DropdownMenuItem(
+                            //             value: 'विद्यार्थी तथा शिक्षक',
+                            //             child: Text('विद्यार्थी तथा शिक्षक'),
+                            //           ),
+                            //           DropdownMenuItem(
+                            //             value: 'रेडियो',
+                            //             child: Text('रेडियो'),
+                            //           ),
+                            //           DropdownMenuItem(
+                            //             value: 'अन्य',
+                            //             child: Text('अन्य'),
+                            //           ),
+                            //         ],
+                            //         onChanged: (value) {
+                            //           controller.permissionSourceMethod.value =
+                            //           value!;
+                            //         },
+                            //         decoration: InputDecoration(
+                            //           filled: true,
+                            //           fillColor: Colors.blue[50],
+                            //           border: OutlineInputBorder(
+                            //             borderRadius: BorderRadius.circular(12),
+                            //             borderSide: BorderSide.none,
+                            //           ),
+                            //           contentPadding: EdgeInsets.symmetric(
+                            //               vertical: 12, horizontal: 8),
+                            //         ),
+                            //       );
+                            //     }),
+                            //   ],
+                            // ),
+                            // Column(
+                            //   children: [
+                            //     Row(
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: [
+                            //         Expanded(
+                            //           child: Text(
+                            //             "डकुमेन्टको फोटोकपी छाडेको छ भने के के छाडेको छ ?",
+                            //             style: TextStyle(
+                            //               fontSize: 14,
+                            //               fontWeight: FontWeight.bold,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     Obx(() {
+                            //       return Column(
+                            //         crossAxisAlignment: CrossAxisAlignment
+                            //             .start,
+                            //         children:
+                            //         _documentOptions.map((option) {
+                            //           return Row(
+                            //             children: [
+                            //               Expanded(
+                            //                 child: Row(
+                            //                   children: [
+                            //                     Checkbox(
+                            //                       value: controller
+                            //                           .selectedDocuments
+                            //                           .contains(
+                            //                           option),
+                            //                       onChanged: (_) =>
+                            //                           controller
+                            //                               .toggleSelection(
+                            //                               option),
+                            //                     ),
+                            //                     Text(option),
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           );
+                            //         }).toList(),
+                            //       );
+                            //     }),
+                            //   ],
+                            // ),
 
                           ],
                         ),

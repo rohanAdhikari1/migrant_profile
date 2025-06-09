@@ -1,5 +1,4 @@
-import 'package:survey/controllers/groupb_fourth_form_controllrt.dart';
-import 'package:survey/pages/forms/location_form.dart';
+import 'package:migrant_profile/controllers/groupb_fourth_form_controllrt.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
